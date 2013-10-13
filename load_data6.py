@@ -16,7 +16,8 @@ global queue
 
 def load_data(user):
 
-    collection.insert(user)
+    user[0]["_id"] = user[0]["id"]
+    collection.save(user[0])
 
     #o = xmltodict.parse(infile)
     #print json.dumps(o) # '{"e": {"a": ["text", "text"]}}'
