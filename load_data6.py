@@ -78,6 +78,6 @@ if __name__ == "__main__":
     db = client.karinas_twitter_db
     collection = db.test_2
     #json_data = parse_xml("tweetsShort.xml")
-    json_data = parse_xml("twitter-pldebatt.xml")
+    json_data = parse_xml("/Users/karinabunyik/Documents/data/twitter-pldebatt.xml")
     #client.disconnect()
     #print(json.dumps(json_data, indent=2))
