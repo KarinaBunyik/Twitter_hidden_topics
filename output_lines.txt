@@ -1,0 +1,50 @@
+<corpus id="twitter-pldebatt">
+<user id="1000007083" username="feliciananasi" name="Felicia Nanasi ♡" created="2012-12-09" followers="82" following="42" description="~ never look back ♡" tweets="270">
+<text id="346544029774778368" datetime="2013-06-17 09:25:09" weekday="Mon" hashtags="|" mentions="|" retweets="0" replies="|" datefrom="20130617" dateto="20130617">
+<sentence id="96045aff71-96079773d5">
+<w pos="PP" msd="PP" lemma="|för|för övrigt|" lex="|för..pp.1|för_övrigt..abm.1|" saldo="|för..1|för..5|för..6|för..7|för_övrigt..1|" prefix="|" suffix="|" ref="01" dephead="03" deprel="TA">För</w>
+<w pos="AB" msd="AB.POS" lemma="|övrig|för övrigt:01|" lex="|övrig..pn.1|för_övrigt..abm.1:01|" saldo="|övrig..1|för_övrigt..1:01|" prefix="|" suffix="|" ref="02" dephead="01" deprel="HD">övrigt</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|ha|" lex="|ha..vb.1|" saldo="|ha..1|" prefix="|" suffix="|" ref="03" dephead="08" deprel="MS">har</w>
+<w pos="PN" msd="PN.UTR.SIN.DEF.SUB" lemma="|jag|" lex="|jag..pn.1|" saldo="|jag..1|" prefix="|" suffix="|" ref="04" dephead="03" deprel="SS">jag</w>
+<w pos="PN" msd="PN.NEU.SIN.DEF.SUB+OBJ" lemma="|den|" lex="|den..pn.1|" saldo="|den..2|" prefix="|" suffix="|" ref="05" dephead="03" deprel="FS">det</w>
+<w pos="AB" msd="AB" lemma="|ganska|" lex="|ganska..ab.1|" saldo="|ganska..1|" prefix="|" suffix="|" ref="06" dephead="07" deprel="AA">ganska</w>
+<w pos="JJ" msd="JJ.POS.UTR+NEU.SIN+PLU.IND+DEF.NOM" lemma="|bra|" lex="|bra..av.2|" saldo="|bra..4|" prefix="|" suffix="|" ref="07" dephead="03" deprel="SP">bra</w>
+<w pos="KN" msd="KN.AN" lemma="|&amp;|" lex="|o..kna.2|" saldo="|och..1|" prefix="|" suffix="|" ref="08" dephead="" deprel="ROOT">&amp;</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|göra|" lex="|göra..vb.1|" saldo="|göra..1|göra..2|göra..3|" prefix="|" suffix="|" ref="09" dephead="08" deprel="+F">gör</w>
+<w pos="AB" msd="AB.POS" lemma="|lite|" lex="|lite..ab.1|" saldo="|lite..1|" prefix="|" suffix="|" ref="10" dephead="09" deprel="AA">lite</w>
+<w pos="HA" msd="HA" lemma="|som|" lex="|som..ab.1|" saldo="|som..3|" prefix="|" suffix="|" ref="11" dephead="10" deprel="KA">som</w>
+<w pos="PN" msd="PN.UTR.SIN.DEF.SUB" lemma="|jag|" lex="|jag..pn.1|" saldo="|jag..1|" prefix="|" suffix="|" ref="12" dephead="14" deprel="SS">jag</w>
+<w pos="JJ" msd="JJ.POS.UTR.SIN.IND.NOM" lemma="|själv|" lex="|själv..pn.1|" saldo="|själv..1|själv..2|själv..3|" prefix="|" suffix="|" ref="13" dephead="12" deprel="PT">själv</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|vilja|" lex="|vilja..vb.1|" saldo="|vilja..1|" prefix="|" suffix="|" ref="14" dephead="11" deprel="UA">vill</w>
+<w pos="NN" msd="NN.UTR.SIN.DEF.NOM" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="15" dephead="14" deprel="OO">👏</w>
+</sentence>
+</text>
+<text id="346543816427331584" datetime="2013-06-17 09:24:18" weekday="Mon" hashtags="|#Båstad|" mentions="|" retweets="0" replies="|" datefrom="20130617" dateto="20130617">
+<sentence id="960a2985ee-9604be6d48">
+<w pos="PP" msd="PP" lemma="|för|för övrigt|" lex="|för..pp.1|för_övrigt..abm.1|" saldo="|för..1|för..5|för..6|för..7|för_övrigt..1|" prefix="|" suffix="|" ref="01" dephead="03" deprel="TA">För</w>
+<w pos="AB" msd="AB.POS" lemma="|övrig|för övrigt:01|" lex="|övrig..pn.1|för_övrigt..abm.1:01|" saldo="|övrig..1|för_övrigt..1:01|" prefix="|" suffix="|" ref="02" dephead="01" deprel="HD">övrigt</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|ha|" lex="|ha..vb.1|" saldo="|ha..1|" prefix="|" suffix="|" ref="03" dephead="08" deprel="MS">har</w>
+<w pos="PN" msd="PN.UTR.SIN.DEF.SUB" lemma="|jag|" lex="|jag..pn.1|" saldo="|jag..1|" prefix="|" suffix="|" ref="04" dephead="03" deprel="SS">jag</w>
+<w pos="PN" msd="PN.NEU.SIN.DEF.SUB+OBJ" lemma="|den|" lex="|den..pn.1|" saldo="|den..2|" prefix="|" suffix="|" ref="05" dephead="03" deprel="OO">det</w>
+<w pos="AB" msd="AB" lemma="|ganska|" lex="|ganska..ab.1|" saldo="|ganska..1|" prefix="|" suffix="|" ref="06" dephead="07" deprel="AA">ganska</w>
+<w pos="AB" msd="AB.POS" lemma="|bra|" lex="|bra..ab.1|" saldo="|bra..1|bra..2|" prefix="|" suffix="|" ref="07" dephead="03" deprel="AA">bra</w>
+<w pos="KN" msd="KN" lemma="|och|" lex="|och..kn.1|" saldo="|och..1|" prefix="|" suffix="|" ref="08" dephead="" deprel="ROOT">och</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|göra|" lex="|göra..vb.1|" saldo="|göra..1|göra..2|göra..3|" prefix="|" suffix="|" ref="09" dephead="08" deprel="+F">gör</w>
+<w pos="AB" msd="AB.POS" lemma="|lite|" lex="|lite..ab.1|" saldo="|lite..1|" prefix="|" suffix="|" ref="10" dephead="09" deprel="PL">lite</w>
+<w pos="HA" msd="HA" lemma="|som|" lex="|som..ab.1|" saldo="|som..3|" prefix="|" suffix="|" ref="11" dephead="10" deprel="KA">som</w>
+<w pos="PN" msd="PN.UTR.SIN.DEF.SUB" lemma="|jag|" lex="|jag..pn.1|" saldo="|jag..1|" prefix="|" suffix="|" ref="12" dephead="14" deprel="SS">jag</w>
+<w pos="JJ" msd="JJ.POS.UTR.SIN.IND.NOM" lemma="|själv|" lex="|själv..pn.1|" saldo="|själv..1|själv..2|själv..3|" prefix="|" suffix="|" ref="13" dephead="12" deprel="PT">själv</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|vilja|" lex="|vilja..vb.1|" saldo="|vilja..1|" prefix="|" suffix="|" ref="14" dephead="11" deprel="UA">vill</w>
+<w pos="MAD" msd="MAD" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="15" dephead="08" deprel="IP">.</w>
+</sentence>
+<sentence id="96074d08f5-9606cc9078">
+<w pos="NN" msd="NN.UTR.SIN.IND.NOM" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="1" dephead="2" deprel="DT">👏</w>
+<w pos="RG" msd="RG.NOM" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="2" dephead="" deprel="ROOT">#</w>
+<w pos="PM" msd="PM.NOM" lemma="|Båstad|" lex="|Båstad..pm.1|" saldo="|Båstad..1|" prefix="|" suffix="|" ref="3" dephead="2" deprel="HD">Båstad</w>
+</sentence>
+</text>
+<text id="346401428480352257" datetime="2013-06-16 23:58:31" weekday="Sun" hashtags="|#varärmamma|" mentions="|danckler|" retweets="0" replytouser="danckler" replies="|346431143677136897|" datefrom="20130616" dateto="20130616">
+<sentence id="960d41d861-960753de9d">
+<w pos="NN" msd="NN.UTR.SIN.DEF.NOM" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="01" dephead="02" deprel="SS">@</w>
+<w pos="VB" msd="VB.PRS.AKT" lemma="|" lex="|" saldo="|" prefix="|" suffix="|" ref="02" dephead="" deprel="ROOT">danckler</w>
+<w pos="PM" msd="PM.NOM" lemma="|åh|" lex="|åh..in.1|" saldo="|å..4|" prefix="|" suffix="|" ref="03" dephead="02" deprel="OO">åh</w>
