@@ -17,7 +17,9 @@ global queue
 
 def load_data(user):
 
-    collection.insert(user)
+    user[0]["_id"] = user[0]["id"]
+    collection.save(user[0])
+    #collection.insert(user)
 
     #o = xmltodict.parse(infile)
     #print json.dumps(o) # '{"e": {"a": ["text", "text"]}}'
@@ -166,11 +168,11 @@ def pt(context, cur_elem=None):
     return { k: v[0] if len(v) == 1 else v for k, v in items.items() }
 
 if __name__ == "__main__":
-    #client = pymongo.Connection('localhost', 27017)
-    #db = client.local
-    client = pymongo.Connection('squib.de', 27017)
-    db = client.karinas_twitter_db
-    collection = db.test_1
+    client = pymongo.Connection('localhost', 27017)
+    db = client.local
+    #client = pymongo.Connection('squib.de', 27017)
+    #db = client.karinas_twitter_db
+    collection = db.test_2
     #json_data = parse_xml("tweetsShort.xml")
     json_data = parse_xml("/Users/karinabunyik/Documents/data/twitter-pldebatt.xml")
     #client.disconnect()
