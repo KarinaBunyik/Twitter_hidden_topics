@@ -12,6 +12,8 @@ import os
 
 
 global collection
+global data_path
+global script_path
 global queue
 
 
@@ -33,13 +35,16 @@ def parse_xml(file_name):
     
     counter =0
 
-    file1 = open("dataFile1.xml", 'wb')
-    file2 = open("dataFile2.xml", 'wb')
-    file3 = open("dataFile3.xml", 'wb')
-    file4 = open("dataFile4.xml", 'wb')
+    file1 = open(data_path + "dataFile1.xml", 'wb')
+    file2 = open(data_path + "dataFile2.xml", 'wb')
+    file3 = open(data_path + "dataFile3.xml", 'wb')
+    file4 = open(data_path + "dataFile4.xml", 'wb')
 
     print "splitting file..."
     print "readin file1..."
+
+    add_root_script_path = script_path+'insert_root_file.sh '
+
     for action, elem in context:
         if action == "start":
             if elem.tag == 'user': # i want to write out all <bucket> entries
@@ -54,9 +59,9 @@ def parse_xml(file_name):
                     if counter == 100001:
                         print "loading file1..."
                         file1.close()
-                        proc = subprocess.Popen(['/Users/karinabunyik/Twitter_hidden_topics/insert_root_file1.sh'], shell=True, stdout=subprocess.PIPE)
+                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile1.xml"], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file1 = open("dataFile1.xml", 'r')
+                        file1 = open(data_path + "dataFile1.xml", 'r')
                         context1 = etree.iterparse(file1, events=events)
                         t1 = threading.Thread(target=pt, args = (context1,))
                         t1.start()
@@ -67,9 +72,9 @@ def parse_xml(file_name):
                     if counter == 200001:
                         print "loading file2..."
                         file2.close()
-                        proc = subprocess.Popen(['/Users/karinabunyik/Twitter_hidden_topics/insert_root_file2.sh'], shell=True, stdout=subprocess.PIPE)
+                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile2.xml"], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file2 = open("dataFile2.xml", 'r')
+                        file2 = open(data_path + "dataFile2.xml", 'r')
                         context2 = etree.iterparse(file2, events=events)
                         t2 = threading.Thread(target=pt, args = (context2,))
                         t2.start()
@@ -81,9 +86,9 @@ def parse_xml(file_name):
                     if counter == 300001:
                         print "loading file3..."
                         file3.close()
-                        proc = subprocess.Popen(['/Users/karinabunyik/Twitter_hidden_topics/insert_root_file3.sh'], shell=True, stdout=subprocess.PIPE)
+                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile3.xml"], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file3 = open("dataFile3.xml", 'r')
+                        file3 = open(data_path + "dataFile3.xml", 'r')
                         context3 = etree.iterparse(file3, events=events)
                         t3 = threading.Thread(target=pt, args = (context3,))
                         t3.start()
@@ -105,9 +110,9 @@ def parse_xml(file_name):
     #print counter
     print "loading file4..."
     file4.close()
-    proc = subprocess.Popen(['/Users/karinabunyik/Twitter_hidden_topics/insert_root_file4.sh'], shell=True, stdout=subprocess.PIPE)
+    proc = subprocess.Popen([add_root_script_path+data_path+"dataFile4.xml"], shell=True, stdout=subprocess.PIPE)
     proc.wait()
-    file4 = open("dataFile4.xml", 'r')
+    file4 = open(data_path + "dataFile4.xml", 'r')
     context4 = etree.iterparse(file4, events=events)
     t4 = threading.Thread(target=pt, args = (context4,))
     t4.start()
@@ -172,8 +177,10 @@ if __name__ == "__main__":
     db = client.local
     #client = pymongo.Connection('squib.de', 27017)
     #db = client.karinas_twitter_db
-    collection = db.test_2
+    collection = db.test_3
     #json_data = parse_xml("tweetsShort.xml")
-    json_data = parse_xml("/Users/karinabunyik/Documents/data/twitter-pldebatt.xml")
+    data_path = "/Users/karinabunyik/BTSync/Data/"
+    script_path = "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Scripts/"
+    json_data = parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
     #client.disconnect()
     #print(json.dumps(json_data, indent=2))
