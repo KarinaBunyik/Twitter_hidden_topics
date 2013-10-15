@@ -99,13 +99,6 @@ def parse_xml(file_name):
         elem.clear()
         while elem.getprevious() is not None:
             del elem.getparent()[0]
-               #file1.write(ET.tostring(elem, encoding='utf-8'))
-            #if elem.tag == 'resFrame':
-            #    if elem.find("id").text == ":4:39644:482:-1:1": # i only want to write out resFrame entries with this id
-            #        elem.tail = None
-            #        print ET.tostring( elem )
-            #if elem.tag in ['bucket', 'frame', 'resFrame']:
-        #root.clear()  # when done parsing a section clear the tree to safe memory
     del context
     #print counter
     print "loading file4..."
@@ -126,10 +119,10 @@ def parse_xml(file_name):
     file3.close()
     t4.join()
     file4.close()
-    #os.remove('/Users/karinabunyik/Twitter_hidden_topics/dataFile1.xml')
-    #os.remove('/Users/karinabunyik/Twitter_hidden_topics/dataFile2.xml')
-    #os.remove('/Users/karinabunyik/Twitter_hidden_topics/dataFile3.xml')
-    #os.remove('/Users/karinabunyik/Twitter_hidden_topics/dataFile4.xml')
+    os.remove(data_path+"dataFile1.xml")
+    os.remove(data_path+"dataFile2.xml")
+    os.remove(data_path+"dataFile3.xml")
+    os.remove(data_path+"dataFile4.xml")
 def pt(context, cur_elem=None):
     items = defaultdict(list)
 

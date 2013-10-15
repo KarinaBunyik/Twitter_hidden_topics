@@ -12,10 +12,11 @@ from lxml import etree
 
 global collection
 global queue
+global output_file
 
 
 def load_data(user):
-
+    output_file.write(json.dumps(user[0]))
     user[0]["_id"] = user[0]["id"]
     collection.save(user[0])
 
@@ -75,10 +76,17 @@ def pt(context, cur_elem=None):
     return { k: v[0] if len(v) == 1 else v for k, v in items.items() }
 
 if __name__ == "__main__":
-    client = pymongo.Connection('squib.de', 27017)
-    db = client.karinas_twitter_db
-    collection = db.test_2
-    #json_data = parse_xml("tweetsShort.xml")
-    json_data = parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
-    #client.disconnect()
+    client = pymongo.Connection('localhost', 27017)
+    db = client.local
+    #client = pymongo.Connection('squib.de', 27017)
+    #db = client.karinas_twitter_db
+    collection = db.test_short_1
+
+    output_path = "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Output/"
+    output_file = open(output_path + "out_data.txt", 'wb')
+
+    json_data = parse_xml("/Users/karinabunyik/BTSync/Twitter_hidden_topics/Test_input/tweetsShort.xml")
+    #json_data = parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
+    output_file.close()
+    client.disconnect()
     #print(json.dumps(json_data, indent=2))
