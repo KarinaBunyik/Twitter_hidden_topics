@@ -16,8 +16,8 @@ global output_file
 
 
 def load_data(user):
-    output_file.write(json.dumps(user[0]))
     user[0]["_id"] = user[0]["id"]
+    output_file.write(json.dumps(user[0]))
     collection.save(user[0])
 
     #o = xmltodict.parse(infile)
