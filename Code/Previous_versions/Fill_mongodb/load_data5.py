@@ -9,171 +9,160 @@ import threading
 import subprocess
 from lxml import etree
 import os
+import thtdb
+from thtpaths import data_path, script_path, internal_data_path
 
 
-global collection
-global data_path
-global script_path
-global queue
-
-
-def load_data(user):
-
-    user[0]["_id"] = user[0]["id"]
-    collection.save(user[0])
-    #collection.insert(user)
-
-    #o = xmltodict.parse(infile)
-    #print json.dumps(o) # '{"e": {"a": ["text", "text"]}}'
-
-def parse_xml(file_name):
-    events = ("start", "end")
+def parse_xml_multithread(file_name):
     print "parsing..."
+    events = ("start", "end")
     context = etree.iterparse(file_name, events=events, remove_blank_text=True)
     context = iter(context)
     event, root = context.next()
     
     counter =0
-
-    file1 = open(data_path + "dataFile1.xml", 'wb')
-    file2 = open(data_path + "dataFile2.xml", 'wb')
-    file3 = open(data_path + "dataFile3.xml", 'wb')
-    file4 = open(data_path + "dataFile4.xml", 'wb')
+    file1_name = "TempDataFile1.xml"
+    file2_name = "TempDataFile2.xml"
+    file3_name = "TempDataFile3.xml"
+    file4_name = "TempDataFile4.xml"
+    file1 = open(data_path + file1_name, 'wb')
+    file2 = open(data_path + file2_name, 'wb')
+    file3 = open(data_path + file3_name, 'wb')
+    file4 = open(data_path + file4_name, 'wb')
+    xmlroot_open_name = 'root_opening.txt'
+    xmlroot_close_name = 'root_closing.txt'
+    xmlroot_open_path = internal_data_path+xmlroot_open_name
+    xmlroot_close_path = internal_data_path+xmlroot_close_name
 
     print "splitting file..."
     print "readin file1..."
-
-    add_root_script_path = script_path+'insert_root_file.sh '
-
+    add_root_script_path = script_path+'insert_root_file.sh'
     for action, elem in context:
         if action == "start":
-            if elem.tag == 'user': # i want to write out all <bucket> entries
+            if elem.tag == 'user':
                 counter += 1
                 elem.tail = None  
-                if counter <= 100000:
-                    pass
+                if counter <= 5000:
                 #file1.write('%s\n' % user.text.encode('utf-8'))
                     file1.write(etree.tostring(elem, encoding='utf-8'))
-                    #print ET.tostring(elem, encoding='utf-8')
-                elif counter <= 200000:
-                    if counter == 100001:
+                elif counter <= 10000:
+                    if counter == 5001:
                         print "loading file1..."
                         file1.close()
-                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile1.xml"], shell=True, stdout=subprocess.PIPE)
+                        command_string = add_root_script_path+' '+data_path+file1_name+' '+xmlroot_open_path+' '+xmlroot_close_path
+                        proc = subprocess.Popen([command_string], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file1 = open(data_path + "dataFile1.xml", 'r')
+                        file1 = open(data_path + file1_name, 'r')
                         context1 = etree.iterparse(file1, events=events)
                         t1 = threading.Thread(target=pt, args = (context1,))
                         t1.start()
-                        del context1
+                        #del context1
                         print "readin file2..."
                     file2.write(etree.tostring(elem, encoding='utf-8'))
-                elif counter <= 300000:
-                    if counter == 200001:
+                elif counter <= 15000:
+                    if counter == 10001:
                         print "loading file2..."
                         file2.close()
-                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile2.xml"], shell=True, stdout=subprocess.PIPE)
+                        command_string = add_root_script_path+' '+data_path+file2_name+' '+xmlroot_open_path+' '+xmlroot_close_path
+                        proc = subprocess.Popen([command_string], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file2 = open(data_path + "dataFile2.xml", 'r')
+                        file2 = open(data_path + file2_name, 'r')
                         context2 = etree.iterparse(file2, events=events)
                         t2 = threading.Thread(target=pt, args = (context2,))
                         t2.start()
-                        #pt(context2)
-                        del context2
+                        #del context2
                         print "readin file3..."
                     file3.write(etree.tostring(elem, encoding='utf-8'))
-                else: # counter <= 400000:
-                    if counter == 300001:
+                else:
+                    if counter == 15001:
                         print "loading file3..."
                         file3.close()
-                        proc = subprocess.Popen([add_root_script_path+data_path+"dataFile3.xml"], shell=True, stdout=subprocess.PIPE)
+                        command_string = add_root_script_path+' '+data_path+file3_name+' '+xmlroot_open_path+' '+xmlroot_close_path
+                        proc = subprocess.Popen([command_string], shell=True, stdout=subprocess.PIPE)
                         proc.wait()
-                        file3 = open(data_path + "dataFile3.xml", 'r')
+                        file3 = open(data_path + file3_name, 'r')
                         context3 = etree.iterparse(file3, events=events)
                         t3 = threading.Thread(target=pt, args = (context3,))
                         t3.start()
-                        #pt(context3)
-                        del context3
+                        #del context3
                         print "readin file4..."
                     file4.write(etree.tostring(elem, encoding='utf-8'))
         elem.clear()
         while elem.getprevious() is not None:
             del elem.getparent()[0]
     del context
-    #print counter
     print "loading file4..."
     file4.close()
-    proc = subprocess.Popen([add_root_script_path+data_path+"dataFile4.xml"], shell=True, stdout=subprocess.PIPE)
+    command_string = add_root_script_path+' '+data_path+file4_name+' '+xmlroot_open_path+' '+xmlroot_close_path
+    proc = subprocess.Popen([command_string], shell=True, stdout=subprocess.PIPE)
     proc.wait()
-    file4 = open(data_path + "dataFile4.xml", 'r')
+    file4 = open(data_path + file4_name, 'r')
     context4 = etree.iterparse(file4, events=events)
     t4 = threading.Thread(target=pt, args = (context4,))
     t4.start()
-    #pt(context4)
-    del context4
+    #del context4
     t1.join()
+    del context1
     file1.close()
+    os.remove(data_path+file1_name)
     t2.join()
+    del context2
     file2.close()
+    os.remove(data_path+file2_name)
     t3.join()
+    del context3
     file3.close()
+    os.remove(data_path+file3_name)
     t4.join()
+    del context4
     file4.close()
-    os.remove(data_path+"dataFile1.xml")
-    os.remove(data_path+"dataFile2.xml")
-    os.remove(data_path+"dataFile3.xml")
-    os.remove(data_path+"dataFile4.xml")
+    os.remove(data_path+file4_name)
+
+
+def parse_xml(file_name):
+    events = ("start", "end")
+    print "parsing..."
+    context = etree.iterparse(file_name, events=events, remove_blank_text=True)
+    return pt(context)
+
+
 def pt(context, cur_elem=None):
     items = defaultdict(list)
-
     if cur_elem is not None:
         items.update(cur_elem.attrib)
-
     text = ""
-    #queue = Queue.Queue()
-
     for action, elem in context:
-        #t = threading.Thread(target=load_data, args = (items[elem.tag]))
-        #t.daemon = True
-
         if action == "start":
             if elem.tag == 'w':
                 temp = pt(context, elem)
                 temp.update({"val":elem.text})
                 items[elem.tag].append(temp)
             else:
-                #temp_dict = t.start()
                 temp_dict = pt(context, elem)
                 items[elem.tag].append(temp_dict)
-            #print pt(context, elem)
         elif action == "end":
             text = elem.text.strip() if elem.text else ""
             break
         if elem.tag == 'user':
-            load_data(items[elem.tag])
-            #t.start()
+            save_to_db(items[elem.tag])
             del items[elem.tag]
-
         elem.clear()
         while elem.getprevious() is not None:
             del elem.getparent()[0]
-
     del context
-
     if len(items) == 0:
         return text
-
     return { k: v[0] if len(v) == 1 else v for k, v in items.items() }
 
+
+def save_to_db(user):
+    user[0]["_id"] = user[0]["id"]
+    db.collection.save(user[0])
+
+
 if __name__ == "__main__":
-    client = pymongo.Connection('localhost', 27017)
-    db = client.local
-    #client = pymongo.Connection('squib.de', 27017)
-    #db = client.karinas_twitter_db
-    collection = db.test_3
-    #json_data = parse_xml("tweetsShort.xml")
-    data_path = "/Users/karinabunyik/BTSync/Data/"
-    script_path = "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Scripts/"
-    json_data = parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
-    #client.disconnect()
-    #print(json.dumps(json_data, indent=2))
+    db = thtdb.ThtConnection(collectionName='test_1b')
+    #db = thtdb.ThtConnection(host='squib.de')
+
+    parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
+    db.client.disconnect()
