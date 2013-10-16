@@ -1,0 +1,9 @@
+{
+    "cmd": ["/Users/karinabunyik/Library/Enthought/Canopy_64bit/User/bin/python", "-u", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python",
+    "env": {
+    			"LANG": "en_US.UTF-8",
+    			"PYTHONPATH": "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Main/modules"
+    		}
+}
