@@ -56,7 +56,6 @@ def parse_xml_multithread(file_name):
                         context1 = etree.iterparse(file1, events=events)
                         t1 = threading.Thread(target=pt, args = (context1,))
                         t1.start()
-                        #del context1
                         print "readin file2..."
                     file2.write(etree.tostring(elem, encoding='utf-8'))
                 elif counter <= 15000:
@@ -70,7 +69,6 @@ def parse_xml_multithread(file_name):
                         context2 = etree.iterparse(file2, events=events)
                         t2 = threading.Thread(target=pt, args = (context2,))
                         t2.start()
-                        #del context2
                         print "readin file3..."
                     file3.write(etree.tostring(elem, encoding='utf-8'))
                 else:
@@ -84,7 +82,6 @@ def parse_xml_multithread(file_name):
                         context3 = etree.iterparse(file3, events=events)
                         t3 = threading.Thread(target=pt, args = (context3,))
                         t3.start()
-                        #del context3
                         print "readin file4..."
                     file4.write(etree.tostring(elem, encoding='utf-8'))
         elem.clear()
@@ -100,7 +97,6 @@ def parse_xml_multithread(file_name):
     context4 = etree.iterparse(file4, events=events)
     t4 = threading.Thread(target=pt, args = (context4,))
     t4.start()
-    #del context4
     t1.join()
     del context1
     file1.close()
