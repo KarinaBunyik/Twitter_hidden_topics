@@ -1,8 +1,6 @@
 
 #from pymongo import ASCENDING, DESCENDING, Connection
 import io
-import subprocess
-import threading
 from gensim import corpora, models, similarities
 from thtpaths import output_path, internal_data_path, data_path
 import thtdb
@@ -46,12 +44,11 @@ def load_docs_to_file(filename):
     output_file.close()
 
 def lda(filename):
-    #proc = subprocess.Popen([output_path+filename], shell=True, stdout=subprocess.PIPE)
 
     print "loading documents to memory..."
     documents = []
     #with io.open(output_path + "out_data1.txt", 'r', encoding='utf-8') as input_file:
-    with io.open(filename, 'r', encoding='utf-8') as input_file:
+    with io.open(output_path + filename, 'r', encoding='utf-8') as input_file:
         for line in input_file:
             documents.append(line)
 
@@ -64,20 +61,37 @@ def lda(filename):
     print "removing unique words..."
     # remove words that appear only once
     all_tokens = sum(texts, [])
-    print len
     tokens_once = set(word for word in set(all_tokens) if all_tokens.count(word) == 1)
-    #texts = [[word for word in text if word not in tokens_once] for text in texts]
+    texts = [[word for word in text if word not in tokens_once] for text in texts]
 
-    print "dumping texts to file..."
+    print "creating dictionary..."
+    dictionary = corpora.Dictionary(texts)
+    dictionary.save(data_path+'data.dict')
+    print dictionary
+
+    new_doc = "Jag ska jag"
+    new_vec = dictionary.doc2bow(new_doc.lower().split())
+    print new_vec
+
+    output_file = io.open('token2id.out', 'wb')
+    for key in dictionary.token2id:
+        #s = key + ": " + val
+        output_file.write(key)
+        output_file.write(': ')
+        output_file.write(str(dictionary.token2id[key]))
+        output_file.write('\n')
+
+
+    #print "dumping texts to file..."
     #output_file2 = io.open(output_path + "out_data2.txt", 'w', encoding='utf-8')
-    output_file2 = io.open(filename+'.out', 'wb')
-    for text in texts:
-        for word in text:
-            if word not in tokens_once:
-                temp = word+' '
-                output_file2.write(temp.encode('utf8'))
-        end_line = '\n'
-        output_file2.write(end_line.encode('utf8'))
+    #output_file2 = io.open(filename+'.out', 'wb')
+    #for text in texts:
+    #    for word in text:
+    #        if word not in tokens_once:
+    #            temp = word+' '
+    #            output_file2.write(temp.encode('utf8'))
+    #    end_line = '\n'
+    #    output_file2.write(end_line.encode('utf8'))
 
     input_file.close()
 
@@ -87,24 +101,7 @@ if __name__ == "__main__":
 
     #output_filename = "out_data4.txt"
 
-    #load_docs_to_file("out_data4.txt")
-    file1 = data_path+"aa"
-    file2 = data_path+"ab"
-    file3 = data_path+"ac"
-    file4 = data_path+"ad"
-    t1 = threading.Thread(target=lda, args = (file1,))
-    t2 = threading.Thread(target=lda, args = (file2,))
-    t3 = threading.Thread(target=lda, args = (file3,))
-    t4 = threading.Thread(target=lda, args = (file4,))
-    t1.start()
-    t2.start()
-    t3.start()
-    t4.start()
-    t1.join()
-    t2.join()
-    t3.join()
-    t4.join()
-
+    #load_docs_to_file("out_data5.txt")
 
     #load_docs_to_file("out_data3.txt")
-    #lda("out_data3.txt")
+    lda("out_data5.txt")

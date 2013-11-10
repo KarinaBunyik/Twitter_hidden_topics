@@ -2,7 +2,7 @@ var fs = require('fs');
 var xml2object = require('./lib/xml2object');
 var MongoClient = require('mongodb').MongoClient;
 var metrics = require('measured').createCollection();
-var source = fs.createReadStream('../../Data/twitter-pldebatt_original.xml');
+var source = fs.createReadStream('../../../../Data/twitter-pldebatt_original.xml');
 var numCPUs = require("os").cpus().length;
 var collection;
 
