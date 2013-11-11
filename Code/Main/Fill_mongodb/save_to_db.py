@@ -11,6 +11,7 @@ from lxml import etree
 import os
 import thtdb
 from thtpaths import data_path, script_path, internal_data_path
+import time
 
 
 def parse_xml_multithread(file_name):
@@ -153,12 +154,17 @@ def pt(context, cur_elem=None):
 
 def save_to_db(user):
     user[0]["_id"] = user[0]["id"]
-    db.collection.save(user[0])
+    for i in range(5):
+        try:
+            db.collection.save(user[0])
+            break
+        except pymongo.errors.AutoReconnect:
+            time.sleep(pow(2, i))
 
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_1b')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='test_pldebatt_june')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
 
     parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
     db.client.disconnect()
