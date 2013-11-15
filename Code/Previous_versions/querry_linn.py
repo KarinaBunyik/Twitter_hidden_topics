@@ -167,18 +167,18 @@ def querries_mapreduce():
         del word_stat[max_key]
 
 
-def querries():
+def querries(word_stat_name, user_stat_name, hash_stat_name):
 
     # most frequent words co-occuring with the hashtag #pldebatt
-    word_stat_filename = output_path+"word_stat_june_test"
+    word_stat_filename = output_path+word_stat_name
     word_stat_file = io.open(word_stat_filename+'.out', 'wb')
 
     # usernames that tweet most frequently with the hashtag #pldebatt
-    user_stat_filename = output_path+"user_stat_june_test"
+    user_stat_filename = output_path+user_stat_name
     user_stat_file = io.open(user_stat_filename+'.out', 'wb')
 
     # most frequent hashtags co-occuring with the hashtag #pldebatt
-    hash_stat_filename = output_path+"hash_stat_june_test"
+    hash_stat_filename = output_path+hash_stat_name
     hash_stat_file = io.open(hash_stat_filename+'.out', 'wb')
 
     count = 0
@@ -307,8 +307,9 @@ def querries():
         del word_stat[max_key]
 
 if __name__ == "__main__":
-    db = thtdb.ThtConnection(collectionName='test_short_1')
-    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='import_steffen')
-    #querries()
+    #db = thtdb.ThtConnection(collectionName='test_short_1')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_october')
+    querries("word_stat_october_test", "user_stat_october_test", "hash_stat_october_test")
     #querries_aggregated()
-    querries_mapreduce_test()
+    #querries_mapreduce_test()
+    
