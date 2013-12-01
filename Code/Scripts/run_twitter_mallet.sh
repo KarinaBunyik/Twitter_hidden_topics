@@ -1,13 +1,32 @@
 #!/bin/sh
+# ex. ./run_twitter_mallet.sh malletTwitterLDAJuneAll output_LDA_june_all.mallet swedish_stoplist.txt topic-keys-LDA-june-all.txt
 cd /Users/karinabunyik/mallet-2.0.7
-inputdir='/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/'
-internaldir='/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/'
-outdir='/Users/karinabunyik/BTSync/Twitter_hidden_topics/Output/'
-./bin/mallet import-dir --input $inputdir$1 --output $internaldir$2 --keep-sequence --remove-stopwords --extra-stopwords $internaldir$3 --token-regex '[\p{L}\p{M}]+' --skip-html
-#/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/malletTwitterOctober
-#/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/output.mallet
-#/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/swedish_stoplist.txt
-#/Users/karinabunyik/BTSync/Twitter_hidden_topics/Output/topic-state.gz
-./bin/mallet train-topics --input $internaldir$2 --num-topics 20 --output-topic-keys $outdir$4
-#./bin/mallet train-topics --input $internaldir$2 --num-topics 10 --output-doc-topics $4
-# /Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/malletTwitterOctober /Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/output.mallet /Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Internal_data/swedish_stoplist.txt /Users/karinabunyik/BTSync/Twitter_hidden_topics/Output/topic-state.gz
+./bin/mallet import-dir \
+	--input $1 \
+	--output $2 \
+	--keep-sequence  \
+	--remove-stopwords \
+	--extra-stopwords $3 \
+	--token-regex '[\p{L}\p{M}]+' \
+	--skip-html
+./bin/mallet train-topics \
+	--input $internaldir$2 \
+	--inferencer-filename $9 \
+	--evaluator-filename ${11} \
+	--num-topics $6 \
+	--num-top-words $7 \
+	--num-iterations $8 \
+	--doc-topics-threshold 0.1 \
+	--output-topic-keys $4 \
+	--output-doc-topics $5
+./bin/mallet infer-topics \
+  --input $internaldir$2 \
+  --inferencer $9 \
+  --output-doc-topics ${10} \
+  --num-iterations $8
+./bin/mallet evaluate-topics \
+  --evaluator ${11} \
+  --input $2 \
+  --output-doc-probs ${12} \
+  --output-prob ${13}
+
