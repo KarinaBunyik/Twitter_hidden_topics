@@ -163,8 +163,8 @@ def save_to_db(user):
 
 
 if __name__ == "__main__":
-    #db = thtdb.ThtConnection(collectionName='test_1b')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
+    db = thtdb.ThtConnection(collectionName='test_mongod_quiet')
+    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
 
     parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
     db.client.disconnect()

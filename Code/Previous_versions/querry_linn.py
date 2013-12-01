@@ -181,6 +181,9 @@ def querries(word_stat_name, user_stat_name, hash_stat_name):
     hash_stat_filename = output_path+hash_stat_name
     hash_stat_file = io.open(hash_stat_filename+'.out', 'wb')
 
+    # number of distinct words in all courpus
+    # number of distinct words in corpust after filtering on #pldebatt
+
     count = 0
     user_stat = dict()
     hash_stat = dict()
