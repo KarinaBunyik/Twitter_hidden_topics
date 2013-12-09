@@ -440,14 +440,14 @@ def saveWordsPerUserNoUsername(dirname):
             username = str(random.randint(1, 10000))
         if user_words:
             saveToFile(user_words, username, dirname)
+            no_users += 1
         user_words = []
-        no_users += 1
     print "number of LDA documents: ", no_users
 
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
-    db = thtdb.ThtConnection(collectionName='test_pldebatt_october')
-    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='import_steffen')
+    db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
+    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
     #saveWordsPerUser('malletTwitterOctober')
-    saveWordsPerUserNoUsername('malletTwitterLDAOctober_noUser')
+    saveWordsPerUserNoUsername('malletTwitterLDAJune_noUser')

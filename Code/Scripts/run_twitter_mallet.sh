@@ -9,6 +9,8 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--extra-stopwords $3 \
 	--token-regex '[\p{L}\p{M}]+' \
 	--skip-html
+	#--gram-sizes 1,2 \
+	#--keep-sequence-bigrams
 ./bin/mallet train-topics \
 	--input $internaldir$2 \
 	--inferencer-filename $9 \
