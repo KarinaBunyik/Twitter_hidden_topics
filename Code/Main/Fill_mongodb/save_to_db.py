@@ -134,6 +134,10 @@ def pt(context, cur_elem=None):
                 temp = pt(context, elem)
                 temp.update({"val":elem.text})
                 items[elem.tag].append(temp)
+            #elif elem.tag == 'text' or elem.tag == 'sentence':
+            #    temp_dict = pt(context, elem)
+            #    if isinstance(items[elem.tag], list):
+            #        items[elem.tag].append([temp_dict])
             else:
                 temp_dict = pt(context, elem)
                 items[elem.tag].append(temp_dict)
@@ -149,7 +153,16 @@ def pt(context, cur_elem=None):
     del context
     if len(items) == 0:
         return text
-    return { k: v[0] if len(v) == 1 else v for k, v in items.items() }
+    result = dict()
+    for k,v in items.items():
+        if k == 'text' or k == 'sentence':
+            result[k] = v
+        elif len(v) == 1:
+            result[k] = v[0]
+        else:
+            result[k] = v
+    return result
+    #return { k: v[0] if len(v) == 1 else v for k, v in items.items() }
 
 
 def save_to_db(user):
@@ -163,8 +176,8 @@ def save_to_db(user):
 
 
 if __name__ == "__main__":
-    db = thtdb.ThtConnection(collectionName='test_mongod_quiet')
-    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
+    #db = thtdb.ThtConnection(collectionName='pldebatt_october_multi')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
 
-    parse_xml("/Users/karinabunyik/BTSync/Data/twitter-pldebatt.xml")
+    parse_xml_multithread("/Users/karinabunyik/BTSync/Data/twitter-pldebatt-131006.xml")
     db.client.disconnect()
