@@ -1,10 +1,10 @@
 #!/Library/Enthought/Canopy_64bit/User python
 from collections import defaultdict
-import json
-import sys
-import xml.etree.ElementTree as ET
+#import json
+#import sys
+#import xml.etree.ElementTree as ET
 import pymongo
-import Queue
+#import Queue
 import threading
 import subprocess
 from lxml import etree
@@ -43,11 +43,11 @@ def parse_xml_multithread(file_name):
             if elem.tag == 'user':
                 counter += 1
                 elem.tail = None  
-                if counter <= 5000:
+                if counter <= 100000:
                 #file1.write('%s\n' % user.text.encode('utf-8'))
                     file1.write(etree.tostring(elem, encoding='utf-8'))
-                elif counter <= 10000:
-                    if counter == 5001:
+                elif counter <= 200000:
+                    if counter == 200001:
                         print "loading file1..."
                         file1.close()
                         command_string = add_root_script_path+' '+data_path+file1_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -59,8 +59,8 @@ def parse_xml_multithread(file_name):
                         t1.start()
                         print "readin file2..."
                     file2.write(etree.tostring(elem, encoding='utf-8'))
-                elif counter <= 15000:
-                    if counter == 10001:
+                elif counter <= 300000:
+                    if counter == 300001:
                         print "loading file2..."
                         file2.close()
                         command_string = add_root_script_path+' '+data_path+file2_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -73,7 +73,7 @@ def parse_xml_multithread(file_name):
                         print "readin file3..."
                     file3.write(etree.tostring(elem, encoding='utf-8'))
                 else:
-                    if counter == 15001:
+                    if counter == 400001:
                         print "loading file3..."
                         file3.close()
                         command_string = add_root_script_path+' '+data_path+file3_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -134,10 +134,6 @@ def pt(context, cur_elem=None):
                 temp = pt(context, elem)
                 temp.update({"val":elem.text})
                 items[elem.tag].append(temp)
-            #elif elem.tag == 'text' or elem.tag == 'sentence':
-            #    temp_dict = pt(context, elem)
-            #    if isinstance(items[elem.tag], list):
-            #        items[elem.tag].append([temp_dict])
             else:
                 temp_dict = pt(context, elem)
                 items[elem.tag].append(temp_dict)
@@ -155,7 +151,7 @@ def pt(context, cur_elem=None):
         return text
     result = dict()
     for k,v in items.items():
-        if k == 'text' or k == 'sentence':
+        if k == 'text' or k == 'sentence' or k=='w':
             result[k] = v
         elif len(v) == 1:
             result[k] = v[0]
@@ -177,7 +173,7 @@ def save_to_db(user):
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='pldebatt_october_multi')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
 
-    parse_xml_multithread("/Users/karinabunyik/BTSync/Data/twitter-pldebatt-131006.xml")
+    parse_xml_multithread("/Users/karinabunyik/BTSync/Data/twitter-pldebatt-130612.xml")
     db.client.disconnect()
