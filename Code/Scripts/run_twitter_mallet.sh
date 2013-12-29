@@ -8,7 +8,7 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--remove-stopwords \
 	--extra-stopwords $3 \
 	--token-regex '[\p{L}\p{M}]+' \
-	--skip-html
+	--skip-html \
 	#--gram-sizes 1,2 \
 	#--keep-sequence-bigrams
 ./bin/mallet train-topics \
