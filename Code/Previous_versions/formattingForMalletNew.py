@@ -15,6 +15,15 @@ def saveToFile(word_list, filename, dirname):
         ofile.close()
 
 
+def saveToDir(word_list, filename, dirname):
+        dirname = dirname+'/'
+        #user_words_filename = internal_path+'/malletTwitterOctober/'+username
+        ofile = io.open(dirname+filename, 'wb')
+        for word in word_list:
+            if word is not None:
+                ofile.write(word.encode('utf8')+' ')
+        ofile.close()
+
 # The following function gathers non-pldebatt and non-username words from tweets, 
 # groups them by TWEETS and saves them to a file. 
 # No metadata is saved. Filtering on tweets based on #pldebatt
@@ -76,6 +85,110 @@ def saveWordsPerUser(dirname):
     print "number of LDA documents: ", no_users
 
 
+# The following function gathers non-pldebatt and non-username words from tweets, 
+# groups them by TWEETS and saves them to a file. 
+# No metadata is saved. Filtering on tweets based on #pldebatt
+def saveWordsPerTweetByHashtag():
+    print "start"
+    all_folder = '/Users/karinabunyik/BTSync/Data/Test/001/raw'
+    test_folder = '/Users/karinabunyik/BTSync/Data/Test/001/test'
+    train_folder = '/Users/karinabunyik/BTSync/Data/Test/001/train'
+    predict_folder = '/Users/karinabunyik/BTSync/Data/Test/001/predict/unknown'
+    pldebatt_folder = '/pldebatt'
+    nonpldebatt_folder = '/other'
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                is_word_pldebatt = False
+                is_word_politics = False
+                if u'sentence' in text:
+                    tweet_id = text[u'id']
+                    tweet_words = []
+                    for sentence in text[u'sentence']:
+                        if u'w' in sentence:
+                            for word in sentence[u'w']:
+                                if u'val' in word and word[u'val'] is not None:
+                                    if word[u'val'] == u'pldebatt':
+                                        is_word_pldebatt = True
+                                    if word[u'val'] == u'debatt' or word[u'val'] == u'svpol' or word[u'val'] == u'politik':
+                                        is_word_politics = True
+                                    elif (u'hashtags' in text):
+                                        #print(type(word[u'val']))
+                                        #print("hash: ",type(text[u'hashtags']))
+                                        if (word[u'val'] not in text[u'hashtags']):
+                                            tweet_words.append(word[u'val'])
+                if u'hashtags' in text:
+                    if u'pldebatt' in text[u'hashtags'] or is_word_pldebatt:
+                        if len(tweet_words)>10:
+                            saveToDir(tweet_words, tweet_id, all_folder+pldebatt_folder)
+                            rand = random.random()
+                            if rand <0.2:
+                                saveToDir(tweet_words, tweet_id, test_folder+pldebatt_folder)
+                            else:
+                                saveToDir(tweet_words, tweet_id, train_folder+pldebatt_folder)  
+                    elif text[u'hashtags']!=u'|' and u'svpol' not in text[u'hashtags'] and not is_word_politics:
+                        rand1 = random.uniform(1, 100)
+                        if rand1 <= 1.4:
+                            if len(tweet_words)>10:
+                                saveToDir(tweet_words, tweet_id, all_folder+nonpldebatt_folder)
+                                rand2 = random.random()
+                                if rand2 < 0.2:
+                                    saveToDir(tweet_words, tweet_id, test_folder+nonpldebatt_folder)
+                                else:
+                                    saveToDir(tweet_words, tweet_id, train_folder+nonpldebatt_folder)
+                    else:
+                        if len(tweet_words)>10:
+                            saveToDir(tweet_words, tweet_id, predict_folder)
+
+
+
+'''
+                if u'hashtags' in text:
+                    if "pldebatt" in text[u'hashtags']:
+                        tweet_words = []
+                        tweet_id = text[u'id']
+                        is_word_pldebatt = False
+                        if u'sentence' in text:
+                            for sentence in text[u'sentence']:
+                                if u'w' in sentence:
+                                    for word in sentence[u'w']:
+                                        if word[u'val'] == 'pldebatt':
+                                            is_word_pldebatt = False
+
+                                        if u'val' in word:
+                                            if word[u'val'] == 'pldebatt':
+                                                is_word_pldebatt = False
+                                            else:
+                                                tweet_words.append(word[u'val'])
+                        if is_word_pldebatt:
+                            if len(tweet_words)>0:
+                                saveToDir(tweet_words, tweet_id, all_folder+pldebatt_folder)
+                                rand = random.random()
+                                if rand <0.4:
+                                    saveToDir(tweet_words, tweet_id, test_folder+pldebatt_folder)
+                                else:
+                                    saveToDir(tweet_words, tweet_id, train_folder+pldebatt_folder)
+
+                    elif text[u'hashtags'] == '|':
+                        r = random.uniform(1, 100)
+                        if r <= 1.04:
+                            tweet_words = []
+                            tweet_id = text[u'id']
+                            if u'sentence' in text:
+                                for sentence in text[u'sentence']:
+                                    if u'w' in sentence:
+                                        for word in sentence[u'w']:
+                                            if u'val' in word and word[u'val'] != 'pldebatt':
+                                                tweet_words.append(word[u'val'])
+                            if len(tweet_words)>0:
+                                saveToDir(tweet_words, tweet_id, all_folder+nonpldebatt_folder)
+                                rand = random.random()
+                                if rand <0.4:
+                                    saveToDir(tweet_words, tweet_id, test_folder+nonpldebatt_folder)
+                                else:
+                                    saveToDir(tweet_words, tweet_id, train_folder+nonpldebatt_folder)
+'''
+
 # The following function gathers non-username words from ALL tweets, groups them by user and saves them to a file. 
 # No metadata is saved. No filtering on the tweets is made.
 def saveWordsPerUserAll(dirname):
@@ -107,6 +220,7 @@ def saveWordsPerUserAll(dirname):
     print "number of LDA documents: ", no_users
 
 
+'''
 # The following function gathers non-pldebatt and non-username words from tweets that include #pldebatt hashtag, 
 # groups them by user and saves them to a file. 
 # No metadata is saved. Filtering on tweets based on #pldebatt
@@ -191,11 +305,14 @@ def saveWordsPerUserNoUsername(dirname):
             no_users += 1
         user_words = []
     print "number of LDA documents: ", no_users
+'''
 
 
 # The following function gathers non-pldebatt and non-username words from tweets that include #pldebatt hashtag, 
 # groups them by user and saves them to a file. 
 # No metadata is saved. Filtering on tweets based on #pldebatt
+
+'''
 def saveWordsPerUserNoUsernameNoRetweets(dirname):
     no_users = 0
     for user in db.collection.find():
@@ -304,11 +421,12 @@ def saveWordsPerUserNoUsernameNoRetweets(dirname):
             no_users += 1
         user_words = []
     print "number of LDA documents: ", no_users
-
+'''
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
-    db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
-    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
+    #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
     #saveWordsPerUser('malletTwitterOctober')
-    saveWordsPerUserNoUsername('malletTwitterLDAJune_noUser')
+    #saveWordsPerUser('malletTwitterLDAJune')
+    saveWordsPerTweetByHashtag()

@@ -43,11 +43,11 @@ def parse_xml_multithread(file_name):
             if elem.tag == 'user':
                 counter += 1
                 elem.tail = None  
-                if counter <= 100000:
+                if counter <= 70000:
                 #file1.write('%s\n' % user.text.encode('utf-8'))
                     file1.write(etree.tostring(elem, encoding='utf-8'))
-                elif counter <= 200000:
-                    if counter == 200001:
+                elif counter <= 140000:
+                    if counter == 70001:
                         print "loading file1..."
                         file1.close()
                         command_string = add_root_script_path+' '+data_path+file1_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -59,8 +59,8 @@ def parse_xml_multithread(file_name):
                         t1.start()
                         print "readin file2..."
                     file2.write(etree.tostring(elem, encoding='utf-8'))
-                elif counter <= 300000:
-                    if counter == 300001:
+                elif counter <= 210000:
+                    if counter == 140001:
                         print "loading file2..."
                         file2.close()
                         command_string = add_root_script_path+' '+data_path+file2_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -73,7 +73,7 @@ def parse_xml_multithread(file_name):
                         print "readin file3..."
                     file3.write(etree.tostring(elem, encoding='utf-8'))
                 else:
-                    if counter == 400001:
+                    if counter == 210001:
                         print "loading file3..."
                         file3.close()
                         command_string = add_root_script_path+' '+data_path+file3_name+' '+xmlroot_open_path+' '+xmlroot_close_path
@@ -173,7 +173,7 @@ def save_to_db(user):
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='pldebatt_october_multi')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
 
-    parse_xml_multithread("/Users/karinabunyik/BTSync/Data/twitter-pldebatt-130612.xml")
+    parse_xml_multithread("/Users/karinabunyik/BTSync/Data/twitter-pldebatt-131006.xml")
     db.client.disconnect()
