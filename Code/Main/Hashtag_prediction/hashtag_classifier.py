@@ -25,7 +25,7 @@ if 'MLCOMP_DATASETS_HOME' not in os.environ:
     sys.exit(0)
 
 # Load the training set
-dataset_name = 'hashtagging-tweets-5'
+dataset_name = 'hashtagging-tweets'
 print("Loading twitter training set... ")
 twitter_train = load_mlcomp(dataset_name, 'train')
 print(twitter_train.DESCR)
