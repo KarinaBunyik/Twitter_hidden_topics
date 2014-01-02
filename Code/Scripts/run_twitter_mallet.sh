@@ -20,7 +20,8 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--num-iterations $8 \
 	--doc-topics-threshold 0.1 \
 	--output-topic-keys $4 \
-	--output-doc-topics $5
+	--output-doc-topics $5 \
+	--num-threads 8
 ./bin/mallet infer-topics \
   --input $internaldir$2 \
   --inferencer $9 \
