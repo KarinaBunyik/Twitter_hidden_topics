@@ -9,14 +9,13 @@ import os
 import numpy as np
 import scipy.sparse as sp
 import pylab as pl
-import random
 
 from sklearn.datasets import load_mlcomp
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
-from sklearn.naive_bayes import MultinomialNB
+#from sklearn.naive_bayes import MultinomialNB
 
 
 print(__doc__)
@@ -26,8 +25,9 @@ if 'MLCOMP_DATASETS_HOME' not in os.environ:
     sys.exit(0)
 
 # Load the training set
+dataset_name = 'hashtagging-tweets-5'
 print("Loading twitter training set... ")
-twitter_train = load_mlcomp('hashtagging-tweets', 'train')
+twitter_train = load_mlcomp(dataset_name, 'train')
 print(twitter_train.DESCR)
 print("%d documents" % len(twitter_train.filenames))
 print("%d categories" % len(twitter_train.target_names))
@@ -43,9 +43,9 @@ assert sp.issparse(X_train)
 y_train = twitter_train.target
 
 ##################################################
-
+'''
 print("Loading twitter test set... ")
-news_test = load_mlcomp('hashtagging-tweets', 'test')
+news_test = load_mlcomp(dataset_name, 'test')
 t0 = time()
 print("done in %fs" % (time() - t0))
 
@@ -59,11 +59,11 @@ X_test = vectorizer.transform((open(f).read() for f in news_test.filenames))
 y_test = news_test.target
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X_test.shape)
-
-##################################################
 '''
+##################################################
+
 print("Loading twitter prediction set... ")
-news_predict = load_mlcomp('hashtagging-tweets', 'predict')
+news_predict = load_mlcomp(dataset_name, 'predict')
 t0 = time()
 print("done in %fs" % (time() - t0))
 
@@ -76,7 +76,7 @@ X_predict = vectorizer.transform((open(f).read() for f in news_predict.filenames
 #y_predict = news_test.target
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X_predict.shape)
-'''
+
 ###############################################################################
 # Benchmark classifiers
 def benchmark(clf_class, params, name):
@@ -109,7 +109,8 @@ def benchmark(clf_class, params, name):
     pl.colorbar()
 
 
-def benchmark_prediction(clf_class, params, name):
+def benchmark_prediction(
+    clf_class, params, name):
     print("parameters:", params)
     t0 = time()
     clf = clf_class(**params).fit(X_train, y_train)
@@ -124,7 +125,7 @@ def benchmark_prediction(clf_class, params, name):
     print(type(X_predict))
     pred_list = pred.tolist()
     print("First label predicted ", len(pred_list) - sum(pred_list)), " times."
-    print("Second label predicted ", len(pred_list)), " times"
+    print("Second label predicted ", sum(pred_list)), " times"
     for i in range(19):
         print(news_predict.filenames[i], ' :: ', pred_list[i])
         pass
@@ -141,9 +142,9 @@ parameters = {
     'fit_intercept': True,
 }
 
-benchmark(SGDClassifier, parameters, 'SGD')
+#benchmark(SGDClassifier, parameters, 'SGD')
 
-#benchmark_prediction(SGDClassifier, parameters, 'SGD')
+benchmark_prediction(SGDClassifier, parameters, 'SGD')
 
 #print("Testbenching a MultinomialNB classifier...")
 #parameters = {'alpha': 0.01}

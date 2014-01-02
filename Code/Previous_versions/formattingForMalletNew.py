@@ -119,7 +119,7 @@ def saveWordsPerTweetByHashtag():
                                             tweet_words.append(word[u'val'])
                 if u'hashtags' in text:
                     if u'pldebatt' in text[u'hashtags'] or is_word_pldebatt:
-                        if len(tweet_words)>0:
+                        if len(tweet_words)>10:
                             #saveToDir(tweet_words, tweet_id, all_folder+pldebatt_folder)
                             rand = random.random()
                             if rand <0.2:
@@ -131,7 +131,7 @@ def saveWordsPerTweetByHashtag():
                     elif text[u'hashtags']!=u'|' and u'svpol' not in text[u'hashtags'] and not is_word_politics:
                         rand1 = random.uniform(1, 100)
                         if rand1 <= 4.5:
-                            if len(tweet_words)>0:
+                            if len(tweet_words)>10:
                                 #saveToDir(tweet_words, tweet_id, all_folder+nonpldebatt_folder)
                                 rand2 = random.random()
                                 if rand2 < 0.2:
@@ -143,7 +143,7 @@ def saveWordsPerTweetByHashtag():
                     else:
                         rand = random.uniform(1, 100)
                         #if rand <= 1.1:
-                        if len(tweet_words)>0:
+                        if len(tweet_words)>10:
                             saveToDir(tweet_words, tweet_id, predict_folder)
 
 
