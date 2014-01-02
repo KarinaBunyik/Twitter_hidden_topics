@@ -27,7 +27,7 @@ probs_name = 'probs_october_no_username.out'
 doc_probs_name = 'doc_probs_october_no_username.out'
 topic_no = '10'
 topic_word_no = '10'
-iteration_no = '300'
+iteration_no = '1000'
 topic_key_name = 'topic-keys-LDA-october-nouser.txt'
 doc_topic_name = 'doc-topics-LDA-october-nouser.txt'
 
