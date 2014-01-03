@@ -1,10 +1,100 @@
-0	5	björklund jan hatar sverige vanligt björklunds arbetslöshet högre utanförskap 
-1	5	svpol agenda sverige miljarder jobb svtagenda mp alliansen skatten 
-2	5	sjöstedt politik debatten jonas fram hägglund pratar göran svenska 
-3	5	löfven reinfeldt alliansen stefan fredrik debatt oppositionen debatten bort 
-4	5	reinfeldt löfven regeringen björklund val sanningen flexibel inställning skattesänkningar 
-5	5	svt reinfeldts kvällens partiledarna debatten partiledardebatten tv partiledardebatt partiledare 
-6	5	lööf annie romson åsa löfven mp svara hägglund frågan 
-7	5	skolan skola skatter lärare jobb pengar pldebatt människor betyg 
-8	5	tilocblob pldebatten politiskt spel rufsat upprörd spelade håret yatzy 
-9	5	åkesson jimmie diagram attackerade sd sverige fuizbm ordet invandring 
+0	0,5	flyktingar europa asyl eu vägar söka sverige lagliga viktigt överens vikten lampedusa romson största 
+1	0,5	pengar skatt välfärden jobb sänkt jobbar staten möjlighet resurser unga satsningar skatten höja betala 
+2	0,5	behövs ner lyfta lägg samtycke björklund sex vinner politik skattehöjningar män skattesänkningar egna sexualbrottslagstiftningen 
+3	0,5	mindre tro vård julafton ord framtiden problem tiden byter ämne behövs beror lägger hör 
+4	0,5	prata partiledarna regeringen eh kvällens halvåret samlas nöjd ned rösten höjer punkt tanke argumenten 
+5	0,5	twitter tv bla ner följa röst flöde roligare vart bryr åsikter era sätta alliansens 
+6	0,5	reinfeldt vann debatten alliansen debatt tydlig fredrik taggad gårdagens statsminister beroende skoldebatten tempo tillsammans 
+7	0,5	svensk sveriges långt fortsätter utsläpp frågan partiledare stod konstigt papper anders penna talas diskuterar 
+8	0,5	mp sd sverige fp politik tydligt allians allvar korrekt besked enklare vågar prata kära 
+9	0,5	fram särskilt paus välfärden sd finger alldeles skämt varsågoda klipper kontentan kamma innebär sossarna 
+10	0,5	löfven svpol skattesänkningar dålig politik arbetslösheten gymnasiet hjälper vissa sframtid jobb läxhjälp stefan elever 
+11	0,5	björklund pldebatt max hamburgare skapa sjukvård ungdomar förstatliga folkpartiet viktigaste östermalm katastrof räcker handla 
+12	0,5	debatten partiledare debatt ord låta timmar reinfeldt twitter huvudet åtta kanal ställer konstaterar ordet 
+13	0,5	löfven reinfeldt lovar majoritetsregering frågar levererar persson vinna krav jobben otroligt tydliga reda tystnad 
+14	0,5	svpol väljarna vart visa jsa märks synd debattera hatar hyckleri möjligt folket ökar översittare 
+15	0,5	reinfeldt sanningen flexibel inställning fredrik ljuger synd löfven betydligt mannen påstå föreställa skriker statsminister 
+16	0,5	reinfeldt läxhjälp rut högerpopulist någonting vissa jobben arg reinis kronor låt verkligheten xzok npw 
+17	0,5	straff brott debatten hårdare brottslighet polisen debatt ämnet dessa klart norrland diskussion fullständigt pratar 
+18	0,5	reinfeldt löfven alliansen klarar lova allianspartierna starkt pressar procentsspärren sitta sakligt valet oppositionen miljöpartiet 
+19	0,5	åkesson jimmie svälja järnrör ordentligt människor invandrare twittra ba kallar slåss hahaha nyabjärred partist 
+20	0,5	björklund skolan resultat mindre krävs gröna pojkar reformer problem svinaktigt svenska omställningen lösning flickor 
+21	0,5	låt åkesson tjänar förr partiledarna statsministern främst vågar gynnar påminna politiken skolminister apotek vägrar 
+22	0,5	sverige sjukvård fall poäng reinfeldts rödgröna mexiko statsministern regering landet världen miljöpolitik tål förresten 
+23	0,5	svpol ökat löfven agenda mp skolan ansvar fredrik kärnkraften budget ekonomi styrda stänga landsting 
+24	0,5	reinfeldt löfven vinnare debatt debatten klar balans hugget taggad kvällens irriterad svarslös lång valrörelse 
+25	0,5	politik spännande sämst svt partier parti uppenbart paus media välkommen samtliga debatt diskutera retweeta 
+26	0,5	svpol agenda överens löfven lo tydligt jobbskatteavdraget jobb mp miljarder budget match statsministern konkret 
+27	0,5	politiken välja tittar sida lever sverigedemokraterna viktigt miljöfrågan framtiden skiter värld början tag replikskifte 
+28	0,5	högre lön sjuksköterskor månaden chockbeskattning tjänar troligt rädsla debatt sv siffrorna titta köra kommentarer 
+29	0,5	partiledardebatt makten gnäller twittboll ggr män klagar twitter miljön sju icke mamma sparkar missade 
+30	0,5	svpol åkesson jimmie dn sd partiledardebatten invandring migpol däremot övriga frågar aftonbladet röster invandrare 
+31	0,5	politiker pratar siffror själva gud hit syrien kostar massa skillnaden diskuteras behöva flyktingpolitik tänk 
+32	0,5	argument löfvens uppstår reinfeldts underhållande vänster dessa paniken lyssna svfm åkessons identiska stylister rödgröna 
+33	0,5	jävla åkesson partiledardebatt jimmie sjöstedt snälla skärp twitter säg pratar hålla smart okej ideologi 
+34	0,5	reinfeldt fas statsminister avbryter pressad ärligt regeringen hånflinar utanförskapet därför härskarteknik talat debatten ordet 
+35	0,5	jobb skatter högre företag anställa arbete leder unga skapar välfärd dyrare skapas höjda landsbygden 
+36	0,5	hatar arbetslöshet reinfeldt utanförskap hata inleder räknar jobbskaparna älska kontrar företagarna lärde hänvisar perssons 
+37	0,5	svtagenda svpol alliansens ord nsa vindkraft skandalen sverige förvånad utbildning migration skryter trams asyl 
+38	0,5	löfven stefan regera valet berätta märks jobben väljarna fridolin ändra valde höst gustav kriminella 
+39	0,5	partiledardebatten lär ton miljoner drar uttrycken tyda tusen qwfgq vv dessa slut exempel bron 
+40	0,5	debatten skolan kd debatt hägglund synd slagträ frågan används fall lyfta okej hörde timmars 
+41	0,5	partiledare egna vann partiledarna tweets slipper nå sidans partiets enas sätter tips dn timme 
+42	0,5	sjöstedt jonas affär leka bort åkessons vänsterpartiet tittade eftersnack sjöstedts missat leker vettigaste restaurangmomsen 
+43	0,5	svt tv kvällens debatten ämnen röda partiledarna tyckte plats debatt huset eftersnack hör mattan 
+44	0,5	löfven stefan valfläsk köper monopolpengar använder fredrik annie pengar statsministern läskunnig mosade motion oppositionsledaren 
+45	0,5	skolan människor tänk öka betala minska problemet anser löser ngn seriöst påminner jobba äldreomsorgen 
+46	0,5	tilocblob ψ xx kx rx gh yh ux sh rh kh gx eh ݈ 
+47	0,5	reinfeldt oppositionen alliansen fredrik agenda splittrade tydligt tydlig arbeta splittrad vanligt allians opposition lönsamt 
+48	0,5	agenda svpol funkpol aktiva sd svtplay timmen politiken saknades funktionsnedsättning innehåll heja utrymme partipolitiskt 
+49	0,5	tiden reinfeldt vilket regeringen avbryter talar höga hellre alliansen skrika gamla misslyckats borgerliga debattera 
+50	0,5	skolan gårdagens klokt svt vården läst stefan lyfter twittrade ki gakosav artisten olyckan grattis 
+51	0,5	riksdagen orkar kvinnor våldtäkter fatta skratta himla hör liv frågorna partierna sthlm följ lagen 
+52	0,5	diagram attackerade fuizbm politiska hånleende resten bära ordet värv utrymme minst hägglund följa personer 
+53	0,5	reinfeldts studion håret eepwalkl läckt fusklapp talade rufsat ffqdv po hånflin härligt önskar utbildningen 
+54	0,5	löfven besked regeringsfrågan löfvens val pressad stefan problem antalet valrörelsen fakta farlig vägran svarar 
+55	0,5	reinfeldt politik pratar opposition prata attackerar skarpt tråkigt genomdriva fokus alliansens framtid litet huvudet 
+56	0,5	bort alliansen svpol kvällens ledde granskarna omröstningen st granskar värre nätomröstning pravda aftonbladet söndagens 
+57	0,5	svpol reinfeldt brottsligheten minskat västvärlden störst nämner nämndes sv misslyckas killarna stå polisen tjejerna 
+58	0,5	sverige forskning utbildning jämställdhet perspektiv vilja högre våldtäkt agera sossarnas röstas egypten förbjuder lönediskriminering 
+59	0,5	lööf annie centerpartiet lyfter landsbygden mp landet levererar västerbotten vården pratar svtpol vindkraft människor 
+60	0,5	slips lila slipsar vinner färg båda hägglund slipsen debattör tillsammans taget löfvens huvud koll 
+61	0,5	pldebatten jimmy spelar bron psg zlatan halvlek bort roll drömmer huvud berättar svenskar marseille 
+62	0,5	björklund skolan sveriges skatterna lagt miljarder katederundervisning sju speciellt polisen sämre samtliga tal romson 
+63	0,5	alliansen valet frågan svenska nöjda moderaterna folket sitta ansvar resultat ekonomi miljöpartiet riksdagen alliansens 
+64	0,5	varandra tala tänka själva talar kollar lyssna sägs ögonen debatt förslag eleverna stressade utbildningsministern 
+65	0,5	lärare plötsligt fridolin klart ropar analys livesändning rusar livas sjukvårdslandstingsrådet politikerna tittar hhcuhn fina 
+66	0,5	åkesson sjöstedt framstår jsjostedt onekligen retorik sämsta vinnare brusar gemensamma svensk väljare oppositionens hittat 
+67	0,5	reinfeldt skriker regering största hatar leder utanförskap partiledardebatter hänt programledare nämen överrösta misslyckande vars 
+68	0,5	råd klimat klimatet kvällens ihop förslag hägglund nöjd satsa ansvar slut swgreen vänta klimatfrågan 
+69	0,5	ngt politik läxor halvan notera läxrut subvention såhär funderar kostsam privatundervisning bygger attackerar agendas 
+70	0,5	val hört härskartekniker leda varandra kurser lågt snackar överlägsen låg asylpolitiken tragiskt koalition segrare 
+71	0,5	hittills alliansen skatter sänkt satsat läser förstått passar halvtid handlat skita impon polisen chans 
+72	0,5	politik regeringens persson göran skillnad acceptera skyll strategin mindre härma svensk regering kritisera försöka 
+73	0,5	partiledardebatt svt nivå plats svensk partiledardebatten analys analysera skriva missat låg hjälpa sammanfattning internationellt 
+74	0,5	löfven politiskt ökar spel straffen märkbart upprörd yatzy spelade misshandel åkesson partikamrater längden göteborg 
+75	0,5	romson åsa prata idéer jämställdhet mp utmaningar ohälsa pekar besviken fort heja psykiska tjejers 
+76	0,5	björklunds jan frisyr politisk vilde jobbat snyggt björklund tweets hår dryga skrek klara dåså 
+77	0,5	björklund sjöstedt skola flumskolan skapat skolor satsningar resultaten jan talet svensk konkurs skönt flumskola 
+78	0,5	svara löfvén frågan lyckas imponerad timma debatter svarar reinfeldt gav skrattar intetsägande skönt fungerar 
+79	0,5	lööf annie självmål vvwyq yzgg adhd betydligt hiop qjgxg sansade lööfs pddwfq mko tappade 
+80	0,5	sverige skola hit löfven land sämst världens styr skolresultat människor klimat trevligt ansvar styrda 
+81	0,5	sjukt kollar alternativ fb person debatt partierna heja saknar socialdemokraterna byta kultur gas arbetslösheten 
+82	0,5	björklund jan chockbeskatta rör stå inlägg chocken insats andas skolresultaten ledare sverige chock chockbeskattar 
+83	0,5	hand kärnkraft alliansen världens dåligt återigen argument illa gamla samtyckeslagstiftning herregud invandring klimatfrågan visa 
+84	0,5	pratar löven partiledare förklara lyssnar munnen arga hände ordning högskoleutbildning gått väljare tyst polisutbildningen 
+85	0,5	björklund ordet väljer asså enkelt kvällens hög arbete kvällen magiska oppositionen captain fritid vems 
+86	0,5	vanligt arbetslösa sjuka jobba jobbar ovanligt plånboken tala pensionärer programledarna satsningarna rent utbildningsminister vanlig 
+87	0,5	skolan betyg skola lärare elever läxhjälp lärarna eleverna flumskola läxor kunskap utbpol lyfter skolans 
+88	0,5	pldebatt kristina sd oskar läsa karl bidrag land fokus medelhavet annorlunda hennes platser siffror 
+89	0,5	miljarder sjukvården skattesänkningar vården satsar skolan regeringen budgeten arbetslösheten antal vårdplatser budget alliansen alliansens 
+90	0,5	skatten sjöstedt sänka vanligt hägglund höja mp dålig vänstern skoldebatten friskolor sänker sossarna skatterna 
+91	0,5	lova partiledardebatten majoritet läs valet statsminister började minns ledare fattar roligast öppna starkaste knappast 
+92	0,5	lööf annie plakat pratade svenska höll prat hjälper centern lugn åtta utbildning al politiken 
+93	0,5	löfven sjukvården sagt sönder vård hägglunds replik skola kräver sverige sänkta vården budgeten samhället 
+94	0,5	hägglund reinfeldt löfven göran landstingen avskaffa ord gången svenskt sagt förlorare ber snygg beredd 
+95	0,5	rösta parti twittrar demokratisk partier bug partisekreterare vilket block eu vanligt stödrösta grepp premier 
+96	0,5	åkesson försörjning dö livslång syrierna samhället invandring svenska lag brister exakt förlorar frqrswy förklaring 
+97	0,5	människor debatten saknar reinfeldt pratar vanliga övrigt snacka utomlands tillgångar länder önskar redo land 
+98	0,5	svpol sverige alliansen länder satsar ökat rödgröna timmar resurser förslag innovation eu sjukvård arbetade 
+99	0,5	löfven lööf romson sjöstedt slår annie totalt ung företagsamhet slag läget regeringen tydligt omänskligt 
