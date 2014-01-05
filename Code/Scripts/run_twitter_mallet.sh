@@ -8,7 +8,7 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--remove-stopwords \
 	--extra-stopwords $3 \
 	--token-regex '[\p{L}\p{M}]+' \
-	--skip-html \
+	--skip-html 
 	#--gram-sizes 1,2 \
 	#--keep-sequence-bigrams
 ./bin/mallet train-topics \
@@ -21,7 +21,9 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--doc-topics-threshold 0.1 \
 	--output-topic-keys $4 \
 	--output-doc-topics $5 \
-	--num-threads 8
+	--num-threads 8 
+	#--use-ngrams true 
+	#--xml-topic-report topic-report.xml
 ./bin/mallet infer-topics \
   --input $internaldir$2 \
   --inferencer $9 \
