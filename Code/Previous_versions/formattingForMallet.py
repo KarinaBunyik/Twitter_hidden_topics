@@ -8,6 +8,15 @@ import random
 import itertools
 
 
+def isRetweet(word_list):
+    if len(word_list)>0:
+        if word_list[0]=='RT' and word_list[0]=='@':
+            return True
+        else:
+            return False
+    else:
+        return True
+
 def saveToFile(word_list, filename, dirname):
         file_path = internal_path+dirname+'/'
         #user_words_filename = internal_path+'/malletTwitterOctober/'+username
@@ -18,10 +27,21 @@ def saveToFile(word_list, filename, dirname):
         ofile.close()
 
 
+def updateFileWithFile(update_filename, filename, dirname):
+    file_path = internal_path+dirname+'/'
+    #user_words_filename = internal_path+'/malletTwitterOctober/'+username
+    ofile = io.open(file_path+update_filename+'.txt', 'ab')
+    ifile = io.open(file_path+filename+'.txt', 'rb')
+    for word in ifile:
+        if word is not None:
+            ofile.write(word.encode('utf8')+' ')
+    ofile.close()
+    ifile.close()
+
 def updateFile(word_list, filename, dirname):
         file_path = internal_path+dirname+'/'
         #user_words_filename = internal_path+'/malletTwitterOctober/'+username
-        ofile = io.open(file_path+filename+'.txt', 'wb')
+        ofile = io.open(file_path+filename+'.txt', 'ab')
         for word in word_list:
             if word is not None:
                 ofile.write(word.encode('utf8')+' ')
@@ -198,6 +218,8 @@ def saveWordsPerUser(dirname):
 # No metadata is saved. Filtering on tweets based on #pldebatt
 def saveWordsPerHashtag(dirname):
     no_go_list = fileToList('english_stoplist')+fileToList('swedish_stoplist')+fileToList('domain_word_list')
+    retweets = 0
+    tweets = 0
     for user in db.collection.find():
         if u'username' in user:
             if u'text' in user:
@@ -223,12 +245,61 @@ def saveWordsPerHashtag(dirname):
                                                 word_cond = word[u'val']!='pldebatt' and \
                                                             word[u'val'] not in mentions_list and \
                                                             word[u'val'] not in no_go_list
+
                                                 if word_cond:
+                                                    if word[u'val']==u'RE':
+                                                        print 'retweet'
                                                     tweet_words.append(wordForTopics(word,u'lemma'))
                     if len(tweet_words)>0:
-                        for hashtag in hashtags:
-                            if hashtag != u'#pldebatt':
-                                updateFile(tweet_words, hashtag, dirname)
+                        tweets += 1
+                        if not isRetweet(tweet_words):
+                            for hashtag in hashtags:
+                                if hashtag != u'#pldebatt':
+                                    updateFile(tweet_words, hashtag, dirname)
+                        else:
+                            retweets += 1
+    print "Number of retweets: ", retweets
+    print "Number of tweets: ",tweets
+
+def saveWordsPerReply(dirname):
+    no_go_list = fileToList('english_stoplist')+fileToList('swedish_stoplist')+fileToList('domain_word_list')
+    no_of_replies = 0
+    for user in db.collection.find():
+        if u'username' in user:
+            if u'text' in user:
+                for text in user[u'text']:
+                    tweet_words = []
+                    if u'mentions' in text:
+                        mentions_list = text[u'mentions'].split('|')
+                    else:
+                        mentions_list = []                    
+                    if u'hashtags' in text:
+                        if "pldebatt" in text[u'hashtags']:
+                            if u'sentence' in text:
+                                for sentence in text[u'sentence']:
+                                    if u'w' in sentence:
+                                        for word in sentence[u'w']:
+                                            if u'val' in word:
+                                                word_cond = word[u'val']!='pldebatt' and \
+                                                            word[u'val'] not in mentions_list and \
+                                                            word[u'val'] not in no_go_list
+                                                if word_cond:
+                                                    tweet_words.append(wordForTopics(word,u'lemma'))
+
+                    if len(tweet_words)>0:
+                        if u'id' in text:
+                            tweet_id = text[u'id']
+                        else:
+                            tweet_id = 'noid'
+                        if u'replytostatus' not in text:
+                            saveToFile(tweet_words, tweet_id, dirname)
+                        else:
+                            no_of_replies += 1
+                            reply_id =  text[u'replytostatus']
+                            if os.path.exists(internal_path+dirname+'/'+reply_id+'.txt'):
+                                print reply_id, tweet_id
+                            updateFile(tweet_words, reply_id, dirname)
+    print 'no of replies: ', no_of_replies
 
 
 # The following function gathers non-pldebatt and non-username words from tweets, 
@@ -237,7 +308,6 @@ def saveWordsPerHashtag(dirname):
 def saveWordsPerHashtagCluster(dirname):
     no_go_list = fileToList('english_stoplist')+fileToList('swedish_stoplist')+fileToList('domain_word_list')
     cluster_dict = dict()
-    #cluster_dict[0] = []
     for user in db.collection.find():
         if u'username' in user:
             if u'text' in user:
@@ -249,27 +319,24 @@ def saveWordsPerHashtagCluster(dirname):
                     else:
                         mentions_list = []                    
                     if u'hashtags' in text:
-                        #if u'#pldebatt' in text[u'hashtags']:
-                        if text[u'hashtags'] != '|':#'|#pldebatt|': # and text[u'hashtags'] != '|': #!!!!!!!!!!!!!!!!!!!!!!!!
-                            hashtags_temp = text[u'hashtags'].split('|')
-                            hashtags = hashtags_temp[1:len(hashtags_temp)-1]
-                            #if u'#pldebatt' in hashtags:
-                            #    hashtags.remove(u'#pldebatt')
-                        else:
-                            hashtags = [u'noHashtag']
-                        
-                        if u'sentence' in text:
-                            for sentence in text[u'sentence']:
-                                if u'w' in sentence:
-                                    for word in sentence[u'w']:
-                                        if u'val' in word:
-                                            word_cond = word[u'val']!='pldebatt' and \
-                                                        word[u'val'] not in mentions_list and \
-                                                        word[u'val'] not in no_go_list
-                                            if word_cond:
-                                                tweet_words.append(wordForTopics(word,u'lemma'))
-                    #print 'hashtags: ', hashtags
-                    #print 'tweet_words: ', tweet_words
+                        if u'#pldebatt' in text[u'hashtags']:
+                            if text[u'hashtags'] != '|#pldebatt|':
+                                hashtags_temp = text[u'hashtags'].split('|')
+                                hashtags = hashtags_temp[1:len(hashtags_temp)-1]
+                                if u'#pldebatt' in hashtags:
+                                    hashtags.remove(u'#pldebatt')
+                            else:
+                                hashtags = [u'noHashtag']
+                            if u'sentence' in text:
+                                for sentence in text[u'sentence']:
+                                    if u'w' in sentence:
+                                        for word in sentence[u'w']:
+                                            if u'val' in word:
+                                                word_cond = word[u'val']!='pldebatt' and \
+                                                            word[u'val'] not in mentions_list and \
+                                                            word[u'val'] not in no_go_list
+                                                if word_cond:
+                                                    tweet_words.append(wordForTopics(word,u'lemma'))
                     if len(tweet_words)>0 and hashtags != [u'noHashtag']:
                         toDelete, keyValPair = updateFilesReturnNewDictElem(cluster_dict, hashtags, tweet_words, dirname)
                         isNotEmpty = (toDelete and True) or False
@@ -277,12 +344,7 @@ def saveWordsPerHashtagCluster(dirname):
                             for key in toDelete.iterkeys():
                                 del cluster_dict[key]
                         cluster_dict[keyValPair[0]] = keyValPair[1]
-                    r = random.random()
-                    if r < 0.0001:
-                        print cluster_dict
     print 'dict: ', cluster_dict
-                        #for hashtag in hashtags:
-                            #updateFile(tweet_words, hashtag, dirname)
 
 
 # The following function gathers non-username words from ALL tweets, groups them by user and saves them to a file. 
@@ -323,6 +385,6 @@ if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
 
     db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
-    saveWordsPerHashtagCluster('malletTwitterLDAOctober_test')
-    #saveWordsPerHashtagCluster('malletTwitterLDA_short')
+    saveWordsPerReply('malletTwitterLDAOctober_test2')
+    #saveWordsPerUserAll('malletTwitterLDA_short')
     #mergeFiles(['#utbpol','#age','#aftonbladet'],'new','test')
