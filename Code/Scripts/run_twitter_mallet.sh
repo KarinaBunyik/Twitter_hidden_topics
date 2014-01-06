@@ -4,13 +4,12 @@ cd /Users/karinabunyik/mallet-2.0.7
 ./bin/mallet import-dir \
 	--input $1 \
 	--output $2 \
-	--keep-sequence  \
-	--remove-stopwords \
+	--keep-sequence TRUE \
+	--remove-stopwords TRUE\
 	--extra-stopwords $3 \
-	--token-regex '[\p{L}\p{M}]+' \
-	--skip-html 
-	#--gram-sizes 1,2 \
-	#--keep-sequence-bigrams
+	--token-regex '[\p{L}\p{M}\p{P}]+' \
+	--gram-sizes 1 \
+	--keep-sequence-bigrams TRUE
 ./bin/mallet train-topics \
 	--input $internaldir$2 \
 	--inferencer-filename $9 \
@@ -22,8 +21,6 @@ cd /Users/karinabunyik/mallet-2.0.7
 	--output-topic-keys $4 \
 	--output-doc-topics $5 \
 	--num-threads 8 
-	#--use-ngrams true 
-	#--xml-topic-report topic-report.xml
 ./bin/mallet infer-topics \
   --input $internaldir$2 \
   --inferencer $9 \

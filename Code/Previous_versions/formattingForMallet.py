@@ -384,7 +384,7 @@ if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
 
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
-    saveWordsPerReply('malletTwitterLDAOctober_test2')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-medium')
+    saveWordsPerReply('malletTwitterLDA_medium')
     #saveWordsPerUserAll('malletTwitterLDA_short')
     #mergeFiles(['#utbpol','#age','#aftonbladet'],'new','test')
