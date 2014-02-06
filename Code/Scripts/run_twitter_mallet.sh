@@ -4,19 +4,26 @@ cd /Users/karinabunyik/mallet-2.0.7
 ./bin/mallet import-dir \
 	--input $1 \
 	--output $2 \
-	--keep-sequence TRUE \
-	--remove-stopwords TRUE\
+	--keep-sequence true \
+	--remove-stopwords true\
 	--extra-stopwords $3 \
-	--token-regex '[\p{L}\p{M}\p{P}]+' \
-	--gram-sizes 1 \
-	--keep-sequence-bigrams TRUE
+	--token-regex '[\p{L}\p{M}]+' \
+	#--encoding UTF-8 \
+	--gram-sizes 2 \
+	--keep-sequence-bigrams true
+./bin/mallet split \
+	--input $2 \
+	--training-file ${14} \
+	--testing-file ${15} \
+	--training-portion .8
 ./bin/mallet train-topics \
-	--input $internaldir$2 \
+	--input ${14} \
 	--inferencer-filename $9 \
 	--evaluator-filename ${11} \
 	--num-topics $6 \
 	--num-top-words $7 \
 	--num-iterations $8 \
+	#--use-ngrams true \
 	--doc-topics-threshold 0.1 \
 	--output-topic-keys $4 \
 	--output-doc-topics $5 \
@@ -28,7 +35,9 @@ cd /Users/karinabunyik/mallet-2.0.7
   --num-iterations $8
 ./bin/mallet evaluate-topics \
   --evaluator ${11} \
-  --input $2 \
-  --output-doc-probs ${12} \
-  --output-prob ${13}
+  --input ${15} \
+  --output-doc-probs ${13} \
+  --output-prob ${12}
+
+  ./bin/mallet run cc.mallet.util.DocumentLengths --input ${15} > ttt.txt
 
