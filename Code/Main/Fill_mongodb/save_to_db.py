@@ -117,7 +117,7 @@ def parse_xml_multithread(file_name):
 def parse_xml(file_name):
     events = ("start", "end")
     print "parsing..."
-    context = etree.iterparse(file_name, events=events, remove_blank_text=True)
+    context = etree.iterparse(file_name, events=events, remove_blank_text=False)
     return sax_rec(context)
 
 
@@ -131,7 +131,8 @@ def sax_rec(context, cur_elem=None):
         if action == "start":
             if elem.tag == 'w':
                 temp = sax_rec(context, elem)
-                temp.update({"val":elem.text})
+                temp['val'] = elem.text
+                #temp.update({"val":elem.text})
                 items[elem.tag].append(temp)
             else:
                 temp_dict = sax_rec(context, elem)
@@ -174,7 +175,7 @@ def save_to_db(user):
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='pldebatt_october_multi')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-medium')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-132006-new')
 
-    parse_xml(input_path+"twitter-pldebatt-medium.xml")
+    parse_xml(input_path+"twitter-pldebatt-131006.xml")
     db.client.disconnect()
