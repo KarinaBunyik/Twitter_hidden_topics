@@ -1,21 +1,8 @@
 #from bson.son import SON
 import thtdb
 import io
-import os
 from thtpaths import internal_path
-#from bson.code import Code
-import random
-import itertools
 
-
-def isRetweet(word_list):
-    if len(word_list)>0:
-        if word_list[0]=='RT' and word_list[0]=='@':
-            return True
-        else:
-            return False
-    else:
-        return True
 
 def saveToFile(word_list, filename, dirname):
         file_path = internal_path+dirname+'/'
@@ -27,121 +14,44 @@ def saveToFile(word_list, filename, dirname):
         ofile.close()
 
 
-def updateFileWithFile(update_filename, filename, dirname):
-    file_path = internal_path+dirname+'/'
-    #user_words_filename = internal_path+'/malletTwitterOctober/'+username
-    ofile = io.open(file_path+update_filename+'.txt', 'ab')
-    ifile = io.open(file_path+filename+'.txt', 'rb')
-    for word in ifile:
-        if word is not None:
-            ofile.write(word.encode('utf8')+' ')
-    ofile.close()
-    ifile.close()
-
-def updateFile(word_list, filename, dirname):
-        file_path = internal_path+dirname+'/'
-        #user_words_filename = internal_path+'/malletTwitterOctober/'+username
-        ofile = io.open(file_path+filename+'.txt', 'ab')
-        for word in word_list:
-            if word is not None:
-                ofile.write(word.encode('utf8')+' ')
-        ofile.close()
-
-
-def wordForTopics(word_dict, stemming):
-    if stemming == u'lemma':
-        if word_dict[u'lemma'] != '|':
-            return (word_dict[u'lemma'].split('|'))[1]
-        else:
-            return word_dict[u'val']
-    elif stemming == u'val':
-        return word_dict[u'val']
-
-
-def mergeFiles(filename_list,new_filename, dirname):
-    file_path = internal_path+dirname+'/'
-    newfile = io.open(file_path+new_filename+'.txt', 'wb')
-    for filename in filename_list:
-        ifile = io.open(file_path+filename+'.txt', 'rb')
-        file_content = ifile.read()
-        ifile.close()
-        os.remove(file_path+filename+'.txt')
-        newfile.write(file_content)
-    newfile.close()
-        
-
-def overlaps(list1, list2):
-    sb = set(list2)
-    overlap = any(itertools.imap(sb.__contains__, list1))
-    return overlap
-
-
-def findCluster(cluster_dict, hashtags):
-    new_cluster_dict = dict()
-    anyOverlaps = False
-    for key, value in cluster_dict.iteritems():
-        if overlaps(value,hashtags):
-            new_cluster_dict[key] = value
-            anyOverlaps = True
-    new_cluster_key = str(int(max(cluster_dict.keys(), key=int)) + 1)
-    if anyOverlaps:
-        return new_cluster_dict, new_cluster_key
-    else:
-        return dict(), new_cluster_key
-
-
-def collapseSubCluster(cluster_dict, current_hashtags):
-    hashtag_set = set(current_hashtags)
-    for key, value in cluster_dict.iteritems():
-        hashtag_set.update(value)
-    #print 'hashtag union: ', list(hashtag_set)
-    return list(hashtag_set)
-
-def collapsedKeys(cluster_dict):
-    key_list = []
-    for key in cluster_dict.iterkeys():
-        key_list.append(key)
-    return key_list
-
-def updateFilesReturnNewDictElem(cluster_dict, hashtags, word_list, dirname):
-    isNotEmpty = (cluster_dict and True) or False
-    if not isNotEmpty:
-        saveToFile(word_list, '1', dirname)
-        return cluster_dict, ['1',hashtags]
-    else:
-        sub_cluster_dict, new_key = findCluster(cluster_dict, hashtags)
-        isNotEmpty = (sub_cluster_dict and True) or False
-        if not isNotEmpty:
-            saveToFile(word_list, new_key, dirname)
-            return sub_cluster_dict, [new_key,hashtags]
-        else:
-            sub_cluster_files = collapsedKeys(sub_cluster_dict)
-            #print 'subcluster collapsed filenames: ', sub_cluster_files
-            new_hashtags = collapseSubCluster(sub_cluster_dict, hashtags)
-            updateClusterFiles(sub_cluster_files, word_list, new_key, dirname)
-            return sub_cluster_dict, [new_key,new_hashtags]
-
-def updateClusterFiles(sub_cluster_files, word_list, new_key, dirname):
-    file_path = internal_path+dirname+'/'
-    tempfile = io.open(file_path+'temp'+'.txt', 'wb')
-    for word in word_list:
-        if word is not None:
-            tempfile.write(word.encode('utf8')+' ')
-    tempfile.close()
-    sub_cluster_files.append('temp')
-    mergeFiles(sub_cluster_files, new_key, dirname)
-
-
-
 def fileToList(filename):
         word_list = []
-        ifile = io.open(internal_path+filename+'.txt', 'r')
-        #ifile = codecs.open(internal_path+filename+'.txt', 'rb', "utf-8")
+        ifile = io.open(internal_path+'tweetIdLists/'+filename+'.txt', 'r')
         for word in ifile:
             word_list.append(word.replace('\n',''))
-            #word_list.append((word.replace('\n','')).encode('utf8'))
         ifile.close()
         return word_list
+
+
+def fileToListInput(filename):
+        word_list = []
+        ifile = io.open(internal_path+'tfidf/representative_words/'+filename+'.txt', 'r')
+        for word in ifile:
+            word_list.append(word.replace('\n',''))
+        ifile.close()
+        return word_list
+
+
+def isWordInList(sentences, wList):
+    for sentence in sentences:
+        if 'w' in sentence:
+            for word in sentence['w']:
+                if 'val' in word:
+                    if word['val'] in wList:
+                        return True
+    return False
+
+
+def isLemmaInList(sentences, wList):
+    for sentence in sentences:
+        if 'w' in sentence:
+            for word in sentence['w']:
+                if 'lemma' in word:
+                    lemmas_temp = word['lemma'].split('|')
+                    lemmas = lemmas_temp[1:len(lemmas_temp)-1]
+                if bool(set(wList) & set(lemmas)):
+                        return True
+    return False
 
 
 def saveUsersHavingHashtag(hashtag):
@@ -156,8 +66,8 @@ def saveUsersHavingHashtag(hashtag):
     saveToFile(users_hashtag, 'sampleUsersHashtagPldebatt', 'testSamples')
 
 
-
-def tagUsersHavingHashtag(hashtag, tag):
+'''
+def tagUsersHavingHashtag_old(hashtag, tag):
     for user in db.collection.find():
         if u'text' in user:
             for text in user[u'text']:
@@ -172,8 +82,9 @@ def tagUsersHavingHashtag(hashtag, tag):
                                 print "apended"
                             else:
                                 print "in"
+'''
 
-def tagUsersHavingHashtag2(hashtag, tag):
+def tagUsersHavingHashtag(hashtag, tag):
     db.collection.update({'$and': [ {u'usertags': {'$exists': False }},
         {u'text':{'$elemMatch': {u'hashtags':{'$regex': hashtag}} }}]} , 
         {'$set' : {u'usertags' : [tag] }})
@@ -181,59 +92,244 @@ def tagUsersHavingHashtag2(hashtag, tag):
         {u'text':{'$elemMatch': {u'hashtags':{'$regex': hashtag}} }},
         {u'usertags': {'$ne': tag}}  ]} , 
         {'$push':{u'usertags':tag}})
-    #for user in db.collection.find({u'text':{'$elemMatch': {u'hashtags':u'|#pldebatt|'}   }}):
-    #    print user['_id']
-    #{u'text':{'$elemMatch': {u'hashtags':'/'+tag+'/'}   }}
+
+#!!!!!!!!!!!!!!!!!
+def tagTweetsHavingWordAsLemma(wordList, tag):
+    tweet_ids_with_words = []
+    tweet_ids_tagged = []
+    tweet_ids_tag_exists = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if 'sentence' in text:
+                    if isLemmaInList(text['sentence'], wordList):
+                        if 'id' in text:
+                            if text['id'] not in tweet_ids_with_words:
+                                tweet_ids_with_words.append(text['id'])
+                                if 'tweettags' in text:
+                                    if text[u'id'] not in tweet_ids_tagged:
+                                        tweet_ids_tagged.append(text[u'id'])
+                                    if tag in text['tweettags']:
+                                        if text[u'id'] not in tweet_ids_tag_exists:
+                                            tweet_ids_tag_exists.append(text[u'id'])
+    for tid in tweet_ids_with_words:
+        if tid not in tweet_ids_tagged:
+            db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                {'text.id':tid},
+                #{'text.tweettags': {'$exists': False }}  ]}, 
+                {'$set' : {'text.$.tweettags' : [tag] }})
+        else:
+            if tid not in tweet_ids_tag_exists:
+                db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                    {'text.id':tid}, 
+                    {'$push' : {'text.$.tweettags' : tag }})
+
+
 
 def tagTweetsHavingWords(wordList, tag):
-    pass
+    tweet_ids_with_words = []
+    tweet_ids_tagged = []
+    tweet_ids_tag_exists = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if 'sentence' in text:
+                    if isWordInList(text['sentence'], wordList):
+                        if 'id' in text:
+                            if text['id'] not in tweet_ids_with_words:
+                                tweet_ids_with_words.append(text['id'])
+                                if 'tweettags' in text:
+                                    if text[u'id'] not in tweet_ids_tagged:
+                                        tweet_ids_tagged.append(text[u'id'])
+                                    if tag in text['tweettags']:
+                                        if text[u'id'] not in tweet_ids_tag_exists:
+                                            tweet_ids_tag_exists.append(text[u'id'])
+    for tid in tweet_ids_with_words:
+        if tid not in tweet_ids_tagged:
+            db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                {'text.id':tid},
+                #{'text.tweettags': {'$exists': False }}  ]}, 
+                {'$set' : {'text.$.tweettags' : [tag] }})
+        else:
+            if tid not in tweet_ids_tag_exists:
+                db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                    {'text.id':tid}, 
+                    {'$push' : {'text.$.tweettags' : tag }})
 
 def tagTweetsHavingHashtag(hashtag, tag):
-    tweet_ids = []
+    tweet_ids_hashtag = []
+    tweet_ids_tagged = []
+    tweet_ids_tag_exists = []
     for user in db.collection.find():
         if u'text' in user:
             for text in user[u'text']:
                 if u'hashtags' in text:
                     if hashtag in text[u'hashtags'].split('|'):
-                        tweet_ids.append(text[u'id'])
-    db.collection.update( {
-        {u'text':{'$elemMatch': {
-        '$and': [ 
-        {},
-        u'id':{'$in': tweet_ids}} }}]},
-        {})
+                        if text[u'id'] not in tweet_ids_hashtag:
+                            tweet_ids_hashtag.append(text[u'id'])
+                            if 'tweettags' in text:
+                                if text[u'id'] not in tweet_ids_tagged:
+                                    tweet_ids_tagged.append(text[u'id'])
+                                if tag in text['tweettags']:
+                                    if text[u'id'] not in tweet_ids_tag_exists:
+                                        tweet_ids_tag_exists.append(text[u'id'])
+    for tid in tweet_ids_hashtag:
+        if tid not in tweet_ids_tagged:
+            db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                {'text.id':tid},
+                #{'text.tweettags': {'$exists': False }}  ]}, 
+                {'$set' : {'text.$.tweettags' : [tag] }})
+        else:
+            if tid not in tweet_ids_tag_exists:
+                db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                    {'text.id':tid}, 
+                    {'$push' : {'text.$.tweettags' : tag }})
 
+
+#!!!!!!!!!!!!!!!!
 def tagTweetsAsRepliesFromHashtag(hashtag, tag):
-    pass
+    tweet_ids_hashtag_replies = []
+    tweet_ids_tagged = []
+    tweet_ids_tag_exists = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if u'hashtags' in text:
+                    if hashtag in text[u'hashtags'].split('|'):
+                        if 'replies' in text:
+                            if text['replies'] != '|':
+                                for tid in text['replies'].split('|'):
+                                    if tid != '':
+                                        if tid not in tweet_ids_hashtag_replies:
+                                            tweet_ids_hashtag_replies.append(tid)
+
+                                            if text[u'id'] not in tweet_ids_hashtag_replies:
+                                                tweet_ids_hashtag_replies.append(text[u'id'])
+                                                if 'tweettags' in text:
+                                                    if text[u'id'] not in tweet_ids_tagged:
+                                                        tweet_ids_tagged.append(text[u'id'])
+                                                    if tag in text['tweettags']:
+                                                        if text[u'id'] not in tweet_ids_tag_exists:
+                                                            tweet_ids_tag_exists.append(text[u'id'])
+    print tweet_ids_hashtag_replies
+    for tid in tweet_ids_hashtag_replies:
+        if tid not in tweet_ids_tagged:
+            db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                {'text.id':tid},
+                #{'text.tweettags': {'$exists': False }}  ]}, 
+                {'$set' : {'text.$.tweettags' : [tag] }})
+        else:
+            if tid not in tweet_ids_tag_exists:
+                db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
+                    {'text.id':tid}, 
+                    {'$push' : {'text.$.tweettags' : tag }})
 
 
-def tagTweetsFromList(tweetIdList, tag):
-    pass
+def tagTweetsFromFile(tweetIdFile, tag):
+    tweet_ids = fileToList(tweetIdFile)
+    tweet_ids_tagged = []
+    tweet_ids_tag_exists = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if 'id' in text:
+                    if text['id'] in tweet_ids:
+                        if 'tweettags' in text:
+                            if text[u'id'] not in tweet_ids_tagged:
+                                tweet_ids_tagged.append(text[u'id'])
+                            if tag in text['tweettags']:
+                                if text[u'id'] not in tweet_ids_tag_exists:
+                                    tweet_ids_tag_exists.append(text[u'id'])
+    for tid in tweet_ids:
+        if tid not in tweet_ids_tagged:
+            db.collection.update( 
+                {'text.id':tid},
+                {'$set' : {'text.$.tweettags' : [tag] }})
+        else:
+            if tid not in tweet_ids_tag_exists:
+                db.collection.update(
+                    {'text.id':tid}, 
+                    {'$push' : {'text.$.tweettags' : tag }})
 
 
-def removeTag(tag):
+def removeUserTag(tag):
     db.collection.update( {"$and": [{u'usertags': {'$exists': True }}, {u'usertags': {'$in': [tag]}} ]}, 
         {'$pull': {u'usertags': tag}} , 
         upsert=False, 
         multi=True)
 
+
+def removeTweetTag(tag):
+    tweet_ids = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if u'tweettags' in text:
+                    if tag in text['tweettags']:
+                        if text[u'id'] not in tweet_ids:
+                            tweet_ids.append(text[u'id'])
+    for tid in tweet_ids:
+        db.collection.update(
+            {'text.id':tid}, 
+            {'$pull': {'text.$.tweettags': tag}}, upsert=False, multi=True)
+
+
 #SHOULD NOT BE USED
-def removeTaggingValuesTo(noTag):
+def removeUserTaggingValuesTo(noTag):
     db.collection.update({u'usertags': { '$exists': True }}, { "$set": { u'usertags': noTag } }, upsert=False, multi=True)
 
-def removeTagging():
+def removeUserTagging():
     db.collection.update({}, { "$unset": { u'usertags': 1 } }, upsert=False, multi=True)
 
+
+def removeTweetTagging():
+    tweet_ids = []
+    for user in db.collection.find():
+        if u'text' in user:
+            for text in user[u'text']:
+                if u'tweettags' in text:
+                    if text[u'id'] not in tweet_ids:
+                        tweet_ids.append(text[u'id'])
+    for tid in tweet_ids:
+        db.collection.update(
+            {'text.id':tid}, 
+            { "$unset": { 'text.$.tweettags': 1 } }, upsert=False, multi=True)
 
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
 
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-medium')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
     #tagUsersHavingHashtag('#pldebatt', 'dummy3')
+    #tagUsersHavingHashtag(u'#pldebatt', 'dummy3')
     
-    #tagUsersHavingHashtag2(u'#pldebatt', 'dummy3')
+
+    #tagTweetsHavingHashtag('#pldebatt', 'dummy01')
+    #tagTweetsAsRepliesFromHashtag('#svpol', 'dummy06')
+
+    #tagTweetsFromFile('test', 'dummy04')
     #saveUsersHavingHashtag('#pldebatt')
-    #removeTagging()
-    removeTag('dummy2')
+    
+    #tagTweetsHavingWords(fileToList('skola'), 'dummy05')
+
+    #removeTweetTagging()
+    #removeTweetTag('dummy01')
+    print 'processing crime tagging...'
+    tagTweetsHavingWords(fileToListInput('brottochstraff'), 'crime')
+    print 'crime tagging done.'
+    print 'processing school tagging...'
+    tagTweetsHavingWords(fileToListInput('skolan'), 'school')
+    print 'school tagging done.'
+    print 'processing climate tagging...'
+    tagTweetsHavingWords(fileToListInput('klimat'), 'climate')
+    print 'climate tagging done.'
+    print 'processing tax tagging...'
+    tagTweetsHavingWords(fileToListInput('jobbochskatt'), 'tax')
+    print 'tax tagging done.'
+    print 'processing immigration tagging...'
+    tagTweetsHavingWords(fileToListInput('flyktingar'), 'immigration')
+    print 'immigration tagging done.'
+    print 'processing health tagging...'
+    tagTweetsHavingWords(fileToListInput('sjukvard'), 'health')
+    print 'health tagging done.'
