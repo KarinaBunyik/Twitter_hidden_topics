@@ -40,6 +40,7 @@ def updateFileWithFile(update_filename, filename, dirname):
 
 def updateFile(word_list, filename, dirname):
         file_path = internal_path+dirname+'/'
+        word_list.insert(0,'\n')
         #user_words_filename = internal_path+'/malletTwitterOctober/'+username
         ofile = io.open(file_path+filename+'.txt', 'ab')
         for word in word_list:
@@ -186,10 +187,10 @@ def saveWordsPerUser(dirname):
             username = user[u'username']
             if u'text' in user:
                 for text in user[u'text']:
-                    if u'mentions' in text:
-                        mentions_list = text[u'mentions'].split('|')
-                    else:
-                        mentions_list = []                    
+                    #if u'mentions' in text:
+                    #    mentions_list = text[u'mentions'].split('|')
+                    #else:
+                    #    mentions_list = []                    
                     if u'hashtags' in text:
                         if "pldebatt" in text[u'hashtags']:
                             if u'sentence' in text:
@@ -197,11 +198,11 @@ def saveWordsPerUser(dirname):
                                     if u'w' in sentence:
                                         for word in sentence[u'w']:
                                             if u'val' in word:
-                                                word_cond = word[u'val']!='pldebatt' and \
-                                                            word[u'val'] not in mentions_list and \
-                                                            word[u'val'] not in no_go_list
-                                                if word_cond:
-                                                    user_words.append(wordForTopics(word,u'lemma'))
+#                                                word_cond = word[u'val']!='pldebatt' and \
+#                                                            word[u'val'] not in mentions_list and \
+#                                                            word[u'val'] not in no_go_list
+#                                                if word_cond:
+                                                user_words.append(wordForTopics(word,u'lemma'))
         if u'username' in user:
             username = user[u'username']
         else:
@@ -245,6 +246,7 @@ def saveWordsPerHashtag(dirname):
                                                 word_cond = word[u'val']!='pldebatt' and \
                                                             word[u'val'] not in mentions_list and \
                                                             word[u'val'] not in no_go_list
+                                                            
 
                                                 if word_cond:
                                                     if word[u'val']==u'RE':
@@ -292,13 +294,19 @@ def saveWordsPerReply(dirname):
                         else:
                             tweet_id = 'noid'
                         if u'replytostatus' not in text:
-                            saveToFile(tweet_words, tweet_id, dirname)
+                            if os.path.exists(internal_path+dirname+'/'+tweet_id+'.txt'):
+                                updateFile(tweet_words, tweet_id, dirname)
+                            else:
+                                saveToFile(tweet_words, tweet_id, dirname)
                         else:
                             no_of_replies += 1
-                            reply_id =  text[u'replytostatus']
-                            if os.path.exists(internal_path+dirname+'/'+reply_id+'.txt'):
-                                print reply_id, tweet_id
-                            updateFile(tweet_words, reply_id, dirname)
+                            reply_status_id =  text[u'replytostatus']
+                            #reply_user_id = text[u'replytouser']
+                            print reply_status_id, tweet_id
+                            if os.path.exists(internal_path+dirname+'/'+reply_status_id+'.txt'):
+                                updateFile(tweet_words, reply_status_id, dirname)
+                            else:
+                                saveToFile(tweet_words, reply_status_id, dirname)
     print 'no of replies: ', no_of_replies
 
 
@@ -384,7 +392,7 @@ if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
 
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-medium')
-    saveWordsPerReply('malletTwitterLDA_medium')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006-new')
+    saveWordsPerUser('testaggreply')
     #saveWordsPerUserAll('malletTwitterLDA_short')
     #mergeFiles(['#utbpol','#age','#aftonbladet'],'new','test')
