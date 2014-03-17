@@ -1,7 +1,7 @@
 #from bson.son import SON
 import thtdb
 import io
-from thtpaths import internal_data_path
+from thtpaths import internal_path
 import random
 
 
@@ -20,10 +20,10 @@ def saveToDir(word_list, filename, dirname):
 #to be predicted. The hashtags are taken away from the tweets. The positive hashtags end up in a separate folder
 # called "pldebatt", the negative in "other" folder. "raw" folder contains all labeled samples without train-test split.
 def saveWordsPerTweetByHashtag(folder):
-    all_folder = internal_data_path+'/hashtagPrediction/'+folder+'/raw'
-    test_folder = internal_data_path+'/hashtagPrediction/'+folder+'/test'
-    train_folder = internal_data_path+'/hashtagPrediction/'+folder+'/train'
-    predict_folder = internal_data_path+'/hashtagPrediction/'+folder+'/predict/unknown'
+    all_folder = internal_path+'/hashtagPrediction/'+folder+'/raw'
+    test_folder = internal_path+'/hashtagPrediction/'+folder+'/test'
+    train_folder = internal_path+'/hashtagPrediction/'+folder+'/train'
+    predict_folder = internal_path+'/hashtagPrediction/'+folder+'/predict/unknown'
     pldebatt_folder = '/pldebatt'
     nonpldebatt_folder = '/other'
     for user in db.collection.find():
@@ -47,7 +47,7 @@ def saveWordsPerTweetByHashtag(folder):
                                             tweet_words.append(word[u'val'])
                 if u'hashtags' in text:
                     if u'pldebatt' in text[u'hashtags'] or is_word_pldebatt:
-                        if len(tweet_words)>10:
+                        if len(tweet_words)>0:
                             saveToDir(tweet_words, tweet_id, all_folder+pldebatt_folder)
                             rand = random.random()
                             if rand <0.2:
@@ -73,5 +73,5 @@ def saveWordsPerTweetByHashtag(folder):
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
+    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
     saveWordsPerTweetByHashtag('001')
