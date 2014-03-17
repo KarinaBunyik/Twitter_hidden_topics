@@ -175,7 +175,7 @@ def save_to_db(user):
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='pldebatt_october_multi')
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-132006-new')
-
-    parse_xml(input_path+"twitter-pldebatt-131006.xml")
+    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006-new')
+    db = thtdb.ThtConnection(dbName='local', collectionName='twitter-pldebatt-130612')
+    parse_xml(input_path+"twitter-pldebatt-130612.xml")
     db.client.disconnect()
