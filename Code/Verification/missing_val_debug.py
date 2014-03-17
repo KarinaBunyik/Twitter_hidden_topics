@@ -16,13 +16,13 @@ def calcu():
                                 else:
                                     raise NameError('No val')
                         else:
-                            interesting_user_ids.append(user[u'_id'])
-                            print interesting_user_ids
+                            #interesting_user_ids.append(user[u'_id'])
+                            #print interesting_user_ids
                             raise NameError('No word')
                 else:
                     raise NameError('No sentence')
         else:
             raise NameError('No text')
 
-db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
+db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006-new')
 calcu()
