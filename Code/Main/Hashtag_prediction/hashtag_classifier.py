@@ -6,9 +6,12 @@ from __future__ import print_function
 from time import time
 import sys
 import os
+import io
 import numpy as np
 import scipy.sparse as sp
 import pylab as pl
+from thtpaths import internal_path
+import matplotlib.pyplot as plt
 
 from sklearn.datasets import load_mlcomp
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -18,6 +21,25 @@ from sklearn.metrics import classification_report
 #from sklearn.naive_bayes import MultinomialNB
 
 
+def saveToFile(word_list, filename, dirname):
+        file_path = internal_path+dirname+'/'
+        #user_words_filename = internal_path+'/malletTwitterOctober/'+username
+        ofile = io.open(file_path+filename+'.txt', 'wb')
+        for word in word_list:
+            if word is not None:
+                ofile.write(str(word)+'\n')
+        ofile.close()
+
+
+def removePath(filename, dirname):
+        word_list = []
+        ifile = io.open(internal_path+dirname+'/'+filename+'.txt', 'r')
+        for word in ifile:
+            word_list.append(word[len(word)-19:len(word)-1])
+            #word_list.append(word.replace('\n',''))
+        ifile.close()
+        return word_list
+
 print(__doc__)
 
 if 'MLCOMP_DATASETS_HOME' not in os.environ:
@@ -25,7 +47,7 @@ if 'MLCOMP_DATASETS_HOME' not in os.environ:
     sys.exit(0)
 
 # Load the training set
-dataset_name = 'hashtagging-tweets'
+dataset_name = 'hashtagging-tweets-linn-0words-nospecchar'
 print("Loading twitter training set... ")
 twitter_train = load_mlcomp(dataset_name, 'train')
 print(twitter_train.DESCR)
@@ -43,7 +65,7 @@ assert sp.issparse(X_train)
 y_train = twitter_train.target
 
 ##################################################
-'''
+
 print("Loading twitter test set... ")
 news_test = load_mlcomp(dataset_name, 'test')
 t0 = time()
@@ -59,9 +81,11 @@ X_test = vectorizer.transform((open(f).read() for f in news_test.filenames))
 y_test = news_test.target
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X_test.shape)
-'''
+
 ##################################################
 
+
+'''
 print("Loading twitter prediction set... ")
 news_predict = load_mlcomp(dataset_name, 'predict')
 t0 = time()
@@ -76,6 +100,7 @@ X_predict = vectorizer.transform((open(f).read() for f in news_predict.filenames
 #y_predict = news_test.target
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X_predict.shape)
+'''
 
 ###############################################################################
 # Benchmark classifiers
@@ -102,6 +127,13 @@ def benchmark(clf_class, params, name):
     cm = confusion_matrix(y_test, pred)
     print("Confusion matrix:")
     print(cm)
+    #cm = metrics.confusion_matrix(expected, predicted)
+    plt.matshow(cm)
+    plt.title('Confusion matrix')
+    plt.colorbar()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.show()
 
     # Show confusion matrix
     pl.matshow(cm)
@@ -121,16 +153,23 @@ def benchmark_prediction(
               % (np.mean(clf.coef_ != 0) * 100))
     print("Predicting the outcomes of the prediction set")
     t0 = time()
+
     pred = clf.predict(X_predict)
     print(type(X_predict))
     pred_list = pred.tolist()
     print("First label predicted ", len(pred_list) - sum(pred_list)), " times."
     print("Second label predicted ", sum(pred_list)), " times"
-    for i in range(19):
-        print(news_predict.filenames[i], ' :: ', pred_list[i])
+    pred_id_list = []
+    for i in range(len(pred_list)):
+        if pred_list[i] == 1:
+            pred_id_list.append(news_predict.filenames[i])
         pass
 
     print("done in %fs" % (time() - t0))
+    saveToFile(pred_id_list, 'predicted_tweets', 'hashtagPrediction')
+    a = removePath('predicted_tweets', 'hashtagPrediction')
+    print(len(a))
+    saveToFile(a, 'predicted_tweet_ids', 'hashtagPrediction')
 
 
 print("Testbenching a linear classifier...")
@@ -142,9 +181,9 @@ parameters = {
     'fit_intercept': True,
 }
 
-#benchmark(SGDClassifier, parameters, 'SGD')
+benchmark(SGDClassifier, parameters, 'SGD')
 
-benchmark_prediction(SGDClassifier, parameters, 'SGD')
+#benchmark_prediction(SGDClassifier, parameters, 'SGD')
 
 #print("Testbenching a MultinomialNB classifier...")
 #parameters = {'alpha': 0.01}
