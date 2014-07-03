@@ -210,13 +210,13 @@ print 'calculation crime tf-idf...'
 saveToFile(tfidf_1.get_doc_keywords(crimeFile.read()), 'crime_out', 'tfidf')
 print 'crime tf-idf done.'
 print 'calculating school tf-idf...'
-saveToFile(tfidf_1.get_doc_keywords(schoolFile .read()), 'school_out', 'tfidf')
+#saveToFile(tfidf_1.get_doc_keywords(schoolFile .read()), 'school_out', 'tfidf')
 print 'school tf-idf done.'
 print 'calculating climate tf-idf...'
-saveToFile(tfidf_1.get_doc_keywords(climateFile.read()), 'climate_out', 'tfidf')
+#saveToFile(tfidf_1.get_doc_keywords(climateFile.read()), 'climate_out', 'tfidf')
 print 'climate tf-idf done.'
 print 'calculating tax tf-idf...'
-saveToFile(tfidf_1.get_doc_keywords(taxFile.read()), 'tax_out', 'tfidf')
+#saveToFile(tfidf_1.get_doc_keywords(taxFile.read()), 'tax_out', 'tfidf')
 print 'tax tf-idf done.'
 
 #print 'calculating immigration tf-idf...'

@@ -259,16 +259,17 @@ def saveTermTweetsToFile(terms, hashtag):
 
 
 if __name__ == "__main__":
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
-    '''
+    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-131006')
+    db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
+    
     print 'saving crime tweets...'
-    #createTopicDocuments('crime')
+    createTopicDocuments('crime')
     print 'crime tweets done.'
     print 'saving school tweets...'
-    #createTopicDocuments('school')
+    createTopicDocuments('school')
     print 'school tweets done.'
     print 'saving climate tweets...'
-    #createTopicDocuments('climate')
+    createTopicDocuments('climate')
     print 'climate tweets done.'
     print 'saving tax tweets...'
     createTopicDocuments('tax')
@@ -280,16 +281,16 @@ if __name__ == "__main__":
     createTopicDocuments('health')
     print 'health tweets done.'
     
-    '''
+    
     #calculatePldebattDfTerms(fileToListInput('brottochstraff'))
     #calculatePldebattDfTerms(fileToListInput('flyktingar'))
     #calculatePldebattDfTerms(fileToListInput('skolan'))
-    calculatePldebattDfTerms(fileToListInput('jobbochskatt'))
+    #calculatePldebattDfTerms(fileToListInput('jobbochskatt'))
     #calculatePldebattDfTerms(fileToListInput('klimat'))
     #calculatePldebattDfTerms(fileToListInput('sjukvard'))
     #calculateDfTerms(fileToListInput('brottochstraff'))
     #calculateDfTerms(fileToListInput('flyktingar'))
     #calculateDfTerms(fileToListInput('skolan'))
-    calculateDfTerms(fileToListInput('jobbochskatt'))
+    #calculateDfTerms(fileToListInput('jobbochskatt'))
     #calculateDfTerms(fileToListInput('klimat'))
     #calculateDfTerms(fileToListInput('sjukvard'))
