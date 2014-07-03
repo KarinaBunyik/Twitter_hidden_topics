@@ -173,6 +173,7 @@ def tagTweetsHavingHashtag(hashtag, tag):
                                 if tag in text['tweettags']:
                                     if text[u'id'] not in tweet_ids_tag_exists:
                                         tweet_ids_tag_exists.append(text[u'id'])
+    print "ids aquired"
     for tid in tweet_ids_hashtag:
         if tid not in tweet_ids_tagged:
             db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
@@ -298,9 +299,9 @@ def removeTweetTagging():
 
 if __name__ == "__main__":
     #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
-    #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
+    db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
 
-    db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
+    #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
     #tagUsersHavingHashtag('#pldebatt', 'dummy3')
     #tagUsersHavingHashtag(u'#pldebatt', 'dummy3')
     
@@ -315,6 +316,10 @@ if __name__ == "__main__":
 
     #removeTweetTagging()
     #removeTweetTag('dummy01')
+    #print 'processing #pldebatt tagging...'
+    #tagTweetsHavingHashtag('#pldebatt', '#pldebatt')
+    #print '#pldebatt tagging done.'
+    
     print 'processing crime tagging...'
     tagTweetsHavingWords(fileToListInput('brottochstraff'), 'crime')
     print 'crime tagging done.'
@@ -333,3 +338,18 @@ if __name__ == "__main__":
     print 'processing health tagging...'
     tagTweetsHavingWords(fileToListInput('sjukvard'), 'health')
     print 'health tagging done.'
+    #removeTweetTag('health')
+    #print 'health tag removed'
+    #removeTweetTag('crime')
+    #print 'crime tag removed'
+    #removeTweetTag('tax')
+    #print 'tax tag removed'
+    #removeTweetTag('immigration')
+    #print 'immigration tag removed'
+    #removeTweetTag('climate')
+    #print 'climate tag removed'
+    #removeTweetTag('school')
+    #print 'school tag removed'
+    #tagTweetsHavingWords(fileToListInput('sjukvard'), 'health')
+    #print 'health tagging done.'
+    
