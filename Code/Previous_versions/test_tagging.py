@@ -89,7 +89,8 @@ def createTopicDocuments(tag):
 
 #The following function calculates the document(tweet) frequency of a given term(word). It basicaly gives the number of times the term occures +/- epsilon. 
     #(in case one tweet has a term two times, only one will be calculated)
-def countTweetTags(tag):
+def countTweetTags(tags):
+    count_tags = {}
     count_tag = 0
     count_tweets = 0
     count_coordinates = 0
@@ -118,18 +119,24 @@ def countTweetTags(tag):
                     if '#svpol' in text[u'hashtags'].split('|'):
                         count_svpol += 1
                 if u'tweettags' in text:
-                    if tag in text[u'tweettags']:
-                        if u'hashtags' in text:
-                            if '#pldebatt' in text[u'hashtags'].split('|'):
-                                count_tag += 1
-    print "Number of ", tag, " occurences in tweets: ", count_tag
-    print 'pldebatt: ', count_pldebatt
-    print "svpol: ", count_svpol
-    print 'agenda: ', count_agenda
-    print 'debatt: ', count_debatt
-    print 'debatten: ', count_debatten
+                    for tag in tags:
+                        if tag in text[u'tweettags']:
+                            if tag not in count_tags:
+                                count_tags[tag] = 1
+                            else:
+                                count_tags[tag] += 1
+        else:
+            print user[u'_id']
+    print 'Tagged tweet occurences: ', count_tags
+    #print "Number of ", tag, " occurences in tweets: ", count_tag
+    print '#pldebatt tweet occurences: ', count_pldebatt
+    print "#svpol tweet occurences: ", count_svpol
+    print 'agenda tweet occurences: ', count_agenda
+    print 'debatt tweet occurences: ', count_debatt
+    print 'debatten tweet occurences: ', count_debatten
     #print "Number of tweets with coordinaetes: ", count_coordinates
-    #print "Number of tweets: ", count_tweets
+    print "Total number of tweets: ", count_tweets
+
 
 def countUserTags(tag):
     count_tag = 0
@@ -271,7 +278,10 @@ def saveTermTweetsToFile(terms, hashtag):
 
 
 if __name__ == "__main__":
-    db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
+    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-131006')
+    db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-140504')
+    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-130612')
+    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-medium')
     #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
     '''
     print 'saving crime tweets...'
@@ -294,13 +304,10 @@ if __name__ == "__main__":
     print 'health tweets done.'
                                                                                                                                                                                                                                                                                                                                                                                                                                               
     '''
-    countTweetTags('#pldebatt')
-    countTweetTags('crime')
-    countTweetTags('school')
-    countTweetTags('climate')
-    countTweetTags('tax')
-    countTweetTags('immigration')
-    countUserTags('health')
+    tags = ['school', 'crime', 'climate', 'tax', 'health', 
+            'immigration', 'antiracism', 'antirasism', 'eu',
+            'defense', 'openborders', 'welfaregains']
+    countTweetTags(tags)
     #calculatePldebattDfTerms(fileToListInput('brottochstraff'))
     #calculatePldebattDfTerms(fileToListInput('flyktingar'))
     #calculatePldebattDfTerms(fileToListInput('skolan'))
