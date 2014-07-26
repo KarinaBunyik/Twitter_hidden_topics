@@ -2,6 +2,8 @@
 import thtdb
 import io
 from thtpaths import internal_path
+import json
+import bson
 
 
 def saveToFile(word_list, filename, dirname):
@@ -134,16 +136,35 @@ def tagTweetsHavingWords(wordList, tag):
         if u'text' in user:
             for text in user[u'text']:
                 if 'sentence' in text:
-                    if isWordInList(text['sentence'], wordList):
+                    if isWordInList(text['sentence'], wordList) or isLemmaInList(text['sentence'], wordList):
                         if 'id' in text:
                             if text['id'] not in tweet_ids_with_words:
-                                tweet_ids_with_words.append(text['id'])
+                                tweet_ids_with_words.append(text['id'])  #.encode('utf8'))
                                 if 'tweettags' in text:
                                     if text[u'id'] not in tweet_ids_tagged:
                                         tweet_ids_tagged.append(text[u'id'])
                                     if tag in text['tweettags']:
                                         if text[u'id'] not in tweet_ids_tag_exists:
                                             tweet_ids_tag_exists.append(text[u'id'])
+    print "Got tweet ids"
+    #print tweet_ids_with_words
+    #print type(tweet_ids_with_words)
+
+    #tweet_ids_with_words = ['386636574546755584', '386926107758325761', '386596410373992448']
+
+    #my_tweet_ids = [bson.BSON.decode(x) for x in tweet_ids_with_words]
+    #print type(my_tweet_ids)
+    #print type(my_tweet_ids[1])
+    #print [JSONEncoder().encode(x) for x in tweet_ids_with_words]
+    #tweet_ids_with_words_2 = bson.BSON.encode(my_tweet_ids)
+    #print str(tweet_ids_with_words_2)
+    #print my_tweet_ids
+    for tweet_id in tweet_ids_with_words:
+        db.collection.update( {'text.id': tweet_id}, {'$addToSet' : {'text.$.tweettags' : tag }} )
+    #db.collection.find( {'text.id': { '$in': ['386636574546755584', '386926107758325761', '386596410373992448']}})
+    #db.collection.update( {'text.id': { '$in': ['386636574546755584', '386926107758325761', '386596410373992448']}},{'$addToSet' : {'text.$.tweettags' : tag }})
+
+'''
     for tid in tweet_ids_with_words:
         if tid not in tweet_ids_tagged:
             db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
@@ -155,6 +176,7 @@ def tagTweetsHavingWords(wordList, tag):
                 db.collection.update( #{'text.id':a}, {'$set' : {'text.$.tweettags' : [tag] }})
                     {'text.id':tid}, 
                     {'$push' : {'text.$.tweettags' : tag }})
+'''
 
 def tagTweetsHavingHashtag(hashtag, tag):
     tweet_ids_hashtag = []
@@ -298,7 +320,7 @@ def removeTweetTagging():
 
 
 if __name__ == "__main__":
-    #db = thtdb.ThtConnection(collectionName='test_pldebatt_june')
+    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-131006')
     db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
 
     #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='twitter-pldebatt-130612')
@@ -320,25 +342,50 @@ if __name__ == "__main__":
     #tagTweetsHavingHashtag('#pldebatt', '#pldebatt')
     #print '#pldebatt tagging done.'
     
+
+    print 'processing feminism tagging...'
+    tagTweetsHavingWords(fileToListInput('feminism'), 'feminism')
+    print 'antirasism tagging done.'
+    '''
     print 'processing crime tagging...'
-    tagTweetsHavingWords(fileToListInput('brottochstraff'), 'crime')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'crime')
     print 'crime tagging done.'
     print 'processing school tagging...'
-    tagTweetsHavingWords(fileToListInput('skolan'), 'school')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'school')
     print 'school tagging done.'
     print 'processing climate tagging...'
-    tagTweetsHavingWords(fileToListInput('klimat'), 'climate')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'climate')
     print 'climate tagging done.'
     print 'processing tax tagging...'
-    tagTweetsHavingWords(fileToListInput('jobbochskatt'), 'tax')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'tax')
     print 'tax tagging done.'
     print 'processing immigration tagging...'
-    tagTweetsHavingWords(fileToListInput('flyktingar'), 'immigration')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'immigration')
     print 'immigration tagging done.'
     print 'processing health tagging...'
-    tagTweetsHavingWords(fileToListInput('sjukvard'), 'health')
+    tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'health')
     print 'health tagging done.'
-    #removeTweetTag('health')
+    '''
+    #print 'processing antirasism tagging...'
+    #tagTweetsHavingWords(fileToListInput('antirasism'), 'antirasism')
+    #print 'antirasism tagging done.'
+    #print 'processing eu tagging...'
+    #tagTweetsHavingWords(fileToListInput('eu'), 'eu')
+    #print 'eu tagging done.'
+    #print 'processing defense tagging...'
+    #tagTweetsHavingWords(fileToListInput('forsvar'), 'defense')
+    #print 'defense tagging done.'
+    #print 'processing feminism tagging...'
+    #tagTweetsHavingWords(fileToListInput('feminism'), 'feminism')
+    #print 'feminism tagging done.'
+    #print 'processing openborders tagging...'
+    #tagTweetsHavingWords(fileToListInput('oppnagranser'), 'openborders')
+    #print 'openborders tagging done.'
+    #print 'processing welfaregains tagging...'
+    #tagTweetsHavingWords(fileToListInput('vinsterivalfarden'), 'welfaregains')
+    #print 'welfaregains tagging done.'
+
+    #removeTweetTag('antirasism')
     #print 'health tag removed'
     #removeTweetTag('crime')
     #print 'crime tag removed'
