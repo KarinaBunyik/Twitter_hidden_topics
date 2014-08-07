@@ -1,0 +1,1 @@
+mongod --quiet --dbpath /Volumes/Data/mongodb

@@ -1,0 +1,1 @@
+export PYTHONPATH="$PYTHONPATH:/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Main/modules/global_project_paths.py"
