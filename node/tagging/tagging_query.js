@@ -94,11 +94,25 @@ function loopExtractTweets(callback) {
                             console.log('Current number of antiracism tweets: ' + tags.antiracism);
                             console.log(test);
                         }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
                         if ((tweet.hasOwnProperty('tweettag')) && (_.contains(tweet.tweettag,  'antiracism'))) {
                             tags.antiracism++ ;
                             console.log('hello');
                         }
                         else if (tweet.hasOwnProperty('tweettag')){
+<<<<<<< HEAD
+=======
+=======
+                        if (tweet.tweettag && (_.contains(tweet.tweettag,  'antiracism'))) {
+                            tags.antiracism++ ;
+                            console.log('hello');
+                        }
+                        else if (tweet.tweettag){
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
                             test.push(tweet.tweettag);
                             console.log('here');
                         }

@@ -1,10 +1,24 @@
+<<<<<<< HEAD
 # -*- coding: UTF-8 -*-    
+=======
+<<<<<<< HEAD
+# -*- coding: UTF-8 -*-    
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 # Author: Olivier Grisel <olivier.grisel@ensta.org>
 # License: BSD 3 clause
 
 from __future__ import print_function
 
+<<<<<<< HEAD
 import thtdb
+=======
+<<<<<<< HEAD
+import thtdb
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 from time import time
 import sys
 import os
@@ -14,19 +28,39 @@ import scipy.sparse as sp
 import pylab as pl
 from thtpaths import internal_path
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 import random
 import re
+=======
+<<<<<<< HEAD
+import random
+import re
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
 from sklearn.datasets import load_mlcomp
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
+<<<<<<< HEAD
 from sklearn import svm
 from sklearn import tree
+=======
+<<<<<<< HEAD
+from sklearn import svm
+from sklearn import tree
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 #from sklearn.naive_bayes import MultinomialNB
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 global pldebatt_list
 global other_list
 global predict_list
@@ -133,6 +167,11 @@ def saveWordsPerTweetByHashtag(folder, minimal_tweet_length, with_spec_char):
                     raise NameError('Obligationary "hashtags" attribute missing in data!')
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 def saveToFile(word_list, filename, dirname):
         file_path = internal_path+dirname+'/'
         #user_words_filename = internal_path+'/malletTwitterOctober/'+username
@@ -152,6 +191,10 @@ def removePath(filename, dirname):
         ifile.close()
         return word_list
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
 print(__doc__)
 
@@ -210,6 +253,37 @@ y_test = [1] * len(pldebatt_list) + [0] * len(other_list)
 
 ##################################################
 '''
+<<<<<<< HEAD
+=======
+=======
+print(__doc__)
+
+if 'MLCOMP_DATASETS_HOME' not in os.environ:
+    print("DATASETS_HOME not set; please follow the above instructions")
+    sys.exit(0)
+
+# Load the training set
+dataset_name = 'hashtagging-tweets-linn-0words-nospecchar'
+print("Loading twitter training set... ")
+twitter_train = load_mlcomp(dataset_name, 'train')
+print(twitter_train.DESCR)
+print("%d documents" % len(twitter_train.filenames))
+print("%d categories" % len(twitter_train.target_names))
+
+print("Extracting features from the dataset using a sparse vectorizer")
+t0 = time()
+vectorizer = TfidfVectorizer(encoding='latin1')
+X_train = vectorizer.fit_transform((open(f).read()
+                                    for f in twitter_train.filenames))
+print("done in %fs" % (time() - t0))
+print("n_samples: %d, n_features: %d" % X_train.shape)
+assert sp.issparse(X_train)
+y_train = twitter_train.target
+
+##################################################
+
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 print("Loading twitter test set... ")
 news_test = load_mlcomp(dataset_name, 'test')
 t0 = time()
@@ -225,11 +299,25 @@ X_test = vectorizer.transform((open(f).read() for f in news_test.filenames))
 y_test = news_test.target
 print("done in %fs" % (time() - t0))
 print("n_samples: %d, n_features: %d" % X_test.shape)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 '''
 ##################################################
 '''
 
 
+<<<<<<< HEAD
+=======
+=======
+
+##################################################
+
+
+'''
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 print("Loading twitter prediction set... ")
 news_predict = load_mlcomp(dataset_name, 'predict')
 t0 = time()
@@ -266,7 +354,15 @@ def benchmark(clf_class, params, name):
     print(clf)
     print()
     print(classification_report(y_test, pred,
+<<<<<<< HEAD
                                 target_names=['pldebatt', 'other']))
+=======
+<<<<<<< HEAD
+                                target_names=['pldebatt', 'other']))
+=======
+                                target_names=news_test.target_names))
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
     cm = confusion_matrix(y_test, pred)
     print("Confusion matrix:")
@@ -317,14 +413,30 @@ def benchmark_prediction(
 
 
 print("Testbenching a linear classifier...")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
 parameters = {
     'loss': 'hinge',
     'penalty': 'elasticnet',
+<<<<<<< HEAD
+=======
+=======
+parameters = {
+    'loss': 'hinge',
+    'penalty': 'l2',
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
     'n_iter': 50,
     'alpha': 0.00001,
     'fit_intercept': True,
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 '''
 parameters = {
     'degree': 3,
@@ -367,6 +479,13 @@ benchmark(SGDClassifier, parameters, 'SGD')
 #benchmark(svm.SVC, parameters, 'SVC')
 #benchmark(svm.LinearSVC, parameters, 'LinearSVC')
 #benchmark(tree.DecisionTreeClassifier, parameters, 'DecisionTree')
+<<<<<<< HEAD
+=======
+=======
+
+benchmark(SGDClassifier, parameters, 'SGD')
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
+>>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
 #benchmark_prediction(SGDClassifier, parameters, 'SGD')
 
