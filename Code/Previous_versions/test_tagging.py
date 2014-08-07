@@ -89,16 +89,7 @@ def createTopicDocuments(tag):
 
 #The following function calculates the document(tweet) frequency of a given term(word). It basicaly gives the number of times the term occures +/- epsilon. 
     #(in case one tweet has a term two times, only one will be calculated)
-<<<<<<< HEAD
 def countTweetTags(tag):
-=======
-<<<<<<< HEAD
-def countTweetTags(tag):
-=======
-def countTweetTags(tags):
-    count_tags = {}
->>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
     count_tag = 0
     count_tweets = 0
     count_coordinates = 0
@@ -127,10 +118,6 @@ def countTweetTags(tags):
                     if '#svpol' in text[u'hashtags'].split('|'):
                         count_svpol += 1
                 if u'tweettags' in text:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
                     if tag in text[u'tweettags']:
                         if u'hashtags' in text:
                             if '#pldebatt' in text[u'hashtags'].split('|'):
@@ -143,29 +130,6 @@ def countTweetTags(tags):
     print 'debatten: ', count_debatten
     #print "Number of tweets with coordinaetes: ", count_coordinates
     #print "Number of tweets: ", count_tweets
-<<<<<<< HEAD
-=======
-=======
-                    for tag in tags:
-                        if tag in text[u'tweettags']:
-                            if tag not in count_tags:
-                                count_tags[tag] = 1
-                            else:
-                                count_tags[tag] += 1
-        else:
-            print user[u'_id']
-    print 'Tagged tweet occurences: ', count_tags
-    #print "Number of ", tag, " occurences in tweets: ", count_tag
-    print '#pldebatt tweet occurences: ', count_pldebatt
-    print "#svpol tweet occurences: ", count_svpol
-    print 'agenda tweet occurences: ', count_agenda
-    print 'debatt tweet occurences: ', count_debatt
-    print 'debatten tweet occurences: ', count_debatten
-    #print "Number of tweets with coordinaetes: ", count_coordinates
-    print "Total number of tweets: ", count_tweets
-
->>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
 
 def countUserTags(tag):
     count_tag = 0
@@ -307,18 +271,7 @@ def saveTermTweetsToFile(terms, hashtag):
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
-=======
-<<<<<<< HEAD
-    db = thtdb.ThtConnection(collectionName='twitter-pldebatt-131006')
-=======
-    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-131006')
-    db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-140504')
-    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-130612')
-    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-medium')
->>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
     #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
     '''
     print 'saving crime tweets...'
@@ -341,10 +294,6 @@ if __name__ == "__main__":
     print 'health tweets done.'
                                                                                                                                                                                                                                                                                                                                                                                                                                               
     '''
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
     countTweetTags('#pldebatt')
     countTweetTags('crime')
     countTweetTags('school')
@@ -352,15 +301,6 @@ if __name__ == "__main__":
     countTweetTags('tax')
     countTweetTags('immigration')
     countUserTags('health')
-<<<<<<< HEAD
-=======
-=======
-    tags = ['school', 'crime', 'climate', 'tax', 'health', 
-            'immigration', 'antiracism', 'antirasism', 'eu',
-            'defense', 'openborders', 'welfaregains']
-    countTweetTags(tags)
->>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
->>>>>>> b2fc47e05158e187ff5a4ff4374d7fee030fc416
     #calculatePldebattDfTerms(fileToListInput('brottochstraff'))
     #calculatePldebattDfTerms(fileToListInput('flyktingar'))
     #calculatePldebattDfTerms(fileToListInput('skolan'))

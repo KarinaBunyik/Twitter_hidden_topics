@@ -74,24 +74,7 @@ print("n_samples: %d, n_features: %d" % X_test.shape)
 
 ##################################################
 '''
-print("Loading twitter test set... ")
-twitter_test = load_mlcomp(dataset_name, 'test')
-t0 = time()
-print("done in %fs" % (time() - t0))
 
-print("Predicting the labels of the test set...")
-print("%d documents" % len(twitter_test.filenames))
-print("%d categories" % len(twitter_test.target_names))
-
-print("Extracting features from the dataset using the same vectorizer")
-t0 = time()
-X_test = vectorizer.transform((open(f).read() for f in twitter_test.filenames))
-y_test = twitter_test.target
-print("done in %fs" % (time() - t0))
-print("n_samples: %d, n_features: %d" % X_test.shape)
-'''
-##################################################
-'''
 
 
 print("Loading twitter prediction set... ")
