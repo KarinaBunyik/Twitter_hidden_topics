@@ -3,9 +3,15 @@ var fs = require('fs');
 var _ = require('underscore');
 var MongoClient = require('mongodb').MongoClient;
 
+<<<<<<< HEAD
 var connectionString = 'mongodb://localhost:27017/tweets_by_users_october_2';
 var collectionName = 'twitter-pldebatt-131006';
 var filePath = '/Volumes/Data/Twitter_pldebatt_project/Data/Internal/tfidf/representative_words/jobbochskatt.txt';
+=======
+var connectionString = 'mongodb://localhost:27017/tweets_by_users';
+var collectionName = 'twitter-pldebatt-140504';
+var filePath = '/Volumes/Data/Twitter_pldebatt_project/Data/Internal/tfidf/representative_words/antirasism.txt';
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
 var stoplistPath = '/Volumes/Data/Twitter_pldebatt_project/Data/Internal/tfidf/representative_words/swedish_stoplist.txt';
 var collection;
 var words;
@@ -81,10 +87,15 @@ function loopExtractTweets(callback) {
 
                         tweet.sentence.forEach(function(sent) {
                             sent.w.forEach(function (word) {
+<<<<<<< HEAD
                                 if (!_.contains(stopwords, word.val.toLowerCase()) && ((_.contains(words, word.val.toLowerCase()) || (isInLemma(word.lemma.toLowerCase()))))) {
                                     if (word.val === 'arbetslöshet') {
                                         console.log(word.val);
                                     }
+=======
+                                if (!_.contains(stopwords, word.val) && (_.contains(words, word.val) || (isInLemma(word.lemma.toLowerCase())))) {
+
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
                                    // Check if tweet has been taged alrady
                                    if (_.contains(taggedTweets, tweet.id)){
                                        // No need to update database, return
@@ -103,8 +114,13 @@ function loopExtractTweets(callback) {
                 async.eachSeries(tweetsToUpdate, function(tweet, cb) {
 
                     // Update the database
+<<<<<<< HEAD
                     collection.update({'text.id': tweet}, {'$addToSet': {'text.$.tweettags': 'tax' }}, function (err, res) {
                         if(err) throw err;
+=======
+                    collection.update({'text.id': tweet}, {'$addToSet': {'text.$.tweettags': 'antiracism' }}, function (err, res) {
+
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
                         // Call the 'internal' async callback cb() so that async knows
                         // that database has been completed
                         cb(err, res);

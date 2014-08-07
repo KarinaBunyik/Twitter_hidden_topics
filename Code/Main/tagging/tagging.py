@@ -345,7 +345,11 @@ if __name__ == "__main__":
 
     print 'processing feminism tagging...'
     tagTweetsHavingWords(fileToListInput('feminism'), 'feminism')
+<<<<<<< HEAD
     print 'feminism tagging done.'
+=======
+    print 'antirasism tagging done.'
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
     '''
     print 'processing crime tagging...'
     tagTweetsHavingWords(fileToListInput('swedish_stoplist'), 'crime')

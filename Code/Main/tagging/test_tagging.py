@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-#
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
 import thtdb
 import io
 from thtpaths import internal_path
@@ -19,11 +22,16 @@ def fileToListInput(filename):
         word_list = []
         ifile = io.open(internal_path+'tfidf/representative_words/'+filename+'.txt', 'r')
         for word in ifile:
+<<<<<<< HEAD
             word_list.append(word.encode("utf-8").replace('\n',''))
+=======
+            word_list.append(word.replace('\n',''))
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
         ifile.close()
         return word_list
 
 
+<<<<<<< HEAD
 def all_pairs(L):
     answer = []
     for i in range(len(L)):
@@ -33,6 +41,8 @@ def all_pairs(L):
     return answer
 
 
+=======
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
 def fileToList(filename):
         word_list = []
         ifile = io.open(internal_path+filename+'.txt', 'r')
@@ -97,6 +107,7 @@ def createTopicDocuments(tag):
                         updateFile(tweet_words, tag, 'tfidf')
                         tweet_words = []
 
+<<<<<<< HEAD
 def countTopicWordOccurence(topic_fime_name):
     print "Count occurence of topic words"
     topic_occurences = {}
@@ -202,6 +213,13 @@ def countTweetTagPairs(topic_tag_list, tag_topics, tag_pairs):
 
 def countTweet_other(tags):
     count_tags = {}
+=======
+#The following function calculates the document(tweet) frequency of a given term(word). It basicaly gives the number of times the term occures +/- epsilon. 
+    #(in case one tweet has a term two times, only one will be calculated)
+def countTweetTags(tags):
+    count_tags = {}
+    count_tag = 0
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
     count_tweets = 0
     count_coordinates = 0
     count_pldebatt = 0
@@ -388,8 +406,13 @@ def saveTermTweetsToFile(terms, hashtag):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     db = thtdb.ThtConnection(dbName='tweets_by_users_october_2', collectionName='twitter-pldebatt-131006')
     #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-140504')
+=======
+    #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-131006')
+    db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-140504')
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
     #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-130612')
     #db = thtdb.ThtConnection(dbName='tweets_by_users', collectionName='twitter-pldebatt-medium')
     #db = thtdb.ThtConnection(host='squib.de', dbName='karinas_twitter_db', collectionName='pldebatt_june')
@@ -415,6 +438,7 @@ if __name__ == "__main__":
                                                                                                                                                                                                                                                                                                                                                                                                                                               
     '''
     tags = ['school', 'crime', 'climate', 'tax', 'health', 
+<<<<<<< HEAD
             'immigration', 'antiracism', 'feminism', 'antirasism', 'eu',
             'defense', 'openborders', 'welfaregains', 'pldebatt_context_linn', 'predicted_linn']
 
@@ -629,6 +653,11 @@ if __name__ == "__main__":
 
     #countTweetTagPairs(topic_tags, one_tag_may_extra, two_tag_may_extra)
     #countTweetTagPairs(topic_tags_october, one_tag_october, two_tag_october)
+=======
+            'immigration', 'antiracism', 'antirasism', 'eu',
+            'defense', 'openborders', 'welfaregains']
+    countTweetTags(tags)
+>>>>>>> 8f45800ea1947d1682d24928447c45c54826984d
     #calculatePldebattDfTerms(fileToListInput('brottochstraff'))
     #calculatePldebattDfTerms(fileToListInput('flyktingar'))
     #calculatePldebattDfTerms(fileToListInput('skolan'))
