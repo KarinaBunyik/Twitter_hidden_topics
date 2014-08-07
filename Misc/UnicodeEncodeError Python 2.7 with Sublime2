@@ -1,0 +1,56 @@
+UnicodeEncodeError Python 2.7 with Sublime2
+
+When I run the following code in Sublime 2
+[code]
+from pymongo import Connection
+import datetime
+
+client = Connection('localhost', 27017)
+db = client.local
+collection = db.test_2
+output_path = "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Output/"
+output_file = open(output_path + "out_data.txt", 'wb')
+
+print "first document..."
+words_list = []
+for user in collection.find({u'username': u'feliciananasi'}):
+    for word in user["text"][0]["sentence"]["w"]:
+        words_list.append(word["val"])
+        print word["val"]
+#print words_list[/code]
+I get the error message:
+[code]Traceback (most recent call last):
+  File "/Users/karinabunyik/BTSync/Twitter_hidden_topics/Code/Previous_versions/querry_tutorial.py", line 49, in <module>
+    print word["val"]
+UnicodeEncodeError: 'ascii' codec can't encode character u'\xf6' in position 1: ordinal not in range(128)
+[Finished in 0.4s with exit code 1][/code]
+When I run the code in Canopy or with Python(Conopys Python 2.7.3 --  64-bit ) command line I get no error, but the result I expect.
+[code]För
+övrigt
+har
+jag
+det
+ganska
+bra
+&
+gör
+lite
+som
+jag
+själv
+vill
+👏
+[/code]
+The commented line in the code would give the following value:
+[code][u'F\xf6r', u'\xf6vrigt', u'har', u'jag', u'det', u'ganska', u'bra', u'&', u'g\xf6r', u'lite', u'som', u'jag', u'sj\xe4lv', u'vill', u'\U0001f44f']
+[/code]
+My canopy.sublime-build file is the following:
+[code]{
+    "cmd": ["/Users/karinabunyik/Library/Enthought/Canopy_64bit/User/bin/python", "-u", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python",
+    "env": {"LANG": "en_US.UTF-8"}
+}[/code]
+
+My question: Why do I get this error and how can I get the expected output using Sublime2?
+I googled, checked Sublime Forum and StackOverflow, but did not find the answer. The closest case was this [url]http://stackoverflow.com/questions/15166076/sublime-text-2-encoding-error-with-python3-build[/url], however the answer didnt help.
